@@ -8,14 +8,13 @@ Gem::Specification.new do |spec|
   spec.authors = ['Martin Meyerhoff']
   spec.email = 'mamhoff@gmail.com'
 
-  spec.summary = 'TODO: Write a short summary, because RubyGems requires one.'
-  spec.description = 'TODO: Write a longer description or delete this line.'
-  spec.homepage = 'https://github.com/solidusio-contrib/solidus_configurable_kits#readme'
+  spec.summary = 'Configurable Kits for Solidus. A kit is a product comprised of other products.'
+  spec.homepage = 'https://github.com/friendlycart/solidus_configurable_kits'
   spec.license = 'BSD-3-Clause'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/solidusio-contrib/solidus_configurable_kits'
-  spec.metadata['changelog_uri'] = 'https://github.com/solidusio-contrib/solidus_configurable_kits/blob/master/CHANGELOG.md'
+  spec.metadata['source_code_uri'] = 'https://github.com/friendlycart/solidus_configurable_kits'
+  spec.metadata['changelog_uri'] = 'https://github.com/friendlycart/solidus_configurable_kits/blob/master/CHANGELOG.md'
 
   spec.required_ruby_version = Gem::Requirement.new('~> 2.5')
 

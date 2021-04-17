@@ -1,10 +1,6 @@
 # Solidus Configurable Kits
 
-[![CircleCI](https://circleci.com/gh/solidusio-contrib/solidus_configurable_kits.svg?style=shield)](https://circleci.com/gh/solidusio-contrib/solidus_configurable_kits)
-[![codecov](https://codecov.io/gh/solidusio-contrib/solidus_configurable_kits/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio-contrib/solidus_configurable_kits)
-
-<!-- Explain what your extension does. -->
-
+Configurable Kits for Solidus.
 ## Installation
 
 Add solidus_configurable_kits to your Gemfile:
@@ -88,4 +84,4 @@ Please refer to the dedicated [page](https://github.com/solidusio/solidus/wiki/H
 
 ## License
 
-Copyright (c) 2021 [name of extension author], released under the New BSD License.
+Copyright (c) 2021 [Martin Meyerhoff], released under the New BSD License.
