@@ -31,3 +31,7 @@ gemspec
 # We use `send` instead of calling `eval_gemfile` to work around an issue with
 # how Dependabot parses projects: https://github.com/dependabot/dependabot-core/issues/1658.
 send(:eval_gemfile, 'Gemfile-local') if File.exist? 'Gemfile-local'
+
+group :test do
+  gem 'shoulda-matchers', '~> 4.0'
+end
