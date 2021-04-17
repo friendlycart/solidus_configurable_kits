@@ -7,7 +7,7 @@ module SolidusConfigurableKits
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
 
-    isolate_namespace ::Spree
+    isolate_namespace SolidusConfigurableKits
 
     engine_name 'solidus_configurable_kits'
 
