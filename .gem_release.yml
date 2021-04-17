@@ -1,0 +1,5 @@
+bump:
+  recurse: false
+  file: 'lib/solidus_configurable_kits/version.rb'
+  message: Bump SolidusConfigurableKits to %{version}
+  tag: true
