@@ -3,6 +3,8 @@
 module SolidusConfigurableKits
   module Generators
     class InstallGenerator < Rails::Generators::Base
+      MOUNT_ROUTE = "mount SolidusConfigurableKits::Engine"
+
       class_option :auto_run_migrations, type: :boolean, default: false
       source_root File.expand_path('templates', __dir__)
 
@@ -32,6 +34,31 @@ module SolidusConfigurableKits
           puts 'Skipping bin/rails db:migrate, don\'t forget to run it!' # rubocop:disable Rails/Output
         end
       end
+
+
+    def install_routes
+      routes_file_path = File.join('config', 'routes.rb')
+      unless File.read(routes_file_path).include? MOUNT_ROUTE
+        insert_into_file routes_file_path, after: "Rails.application.routes.draw do\n" do
+          <<-RUBY
+  # This line mounts Solidus's routes at the root of your application.
+  # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
+  # If you would like to change where this engine is mounted, simply change the :at option to something different.
+  #
+  # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
+  #{MOUNT_ROUTE}, at: '/'
+
+          RUBY
+        end
+      end
+
+      unless options[:quiet]
+        puts "*" * 50
+        puts "We added the following line to your application's config/routes.rb file:"
+        puts " "
+        puts "    #{MOUNT_ROUTE}, at: '/'"
+      end
+    end
     end
   end
 end
