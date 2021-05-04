@@ -1,4 +1,13 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Kits' %>
+<% admin_breadcrumb(plural_resource_name(SolidusConfigurableKits::Requirement)) %>
 
-<h1>SolidusConfigurableKits::Admin::Requirements#index</h1>
-<p>Find me in app/views/solidus_configurable_kits/admin/requirements/index.html.erb</p>
+<% if @kit_requirements.any? %>
+  <%= render "table", kit_requirements: @kit_requirements %>
+<% else %>
+  <div class="no-objects-found">
+    <%= t('spree.no_resource', resource: plural_resource_name(SolidusConfigurableKits::Requirement)) %>
+    <% if can? :create, SolidusConfigurableKits::Requirement %>
+      <%= link_to t('spree.create_one'), new_object_url %>
+    <% end %>
+  </div>
+<% end %>

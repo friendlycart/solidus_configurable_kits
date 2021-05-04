@@ -4,3 +4,8 @@
 en:
   solidus_configurable_kits:
     kits: Kits
+  activerecord:
+    models:
+      solidus_configurable_kits/requirement:
+        one: Kit Requirement
+        other: Kit Requirements

@@ -13,6 +13,10 @@ module SolidusConfigurableKits
       def model_class
         SolidusConfigurableKits::Requirement
       end
+
+      def new_object_url
+        solidus_configurable_kits.new_admin_product_kit_requirement_url(@product.slug)
+      end
     end
   end
 end
