@@ -17,6 +17,10 @@ module SolidusConfigurableKits
       def new_object_url
         solidus_configurable_kits.new_admin_product_kit_requirement_url(@product.slug)
       end
+
+      def collection_url
+        solidus_configurable_kits.admin_product_kit_requirements_url(@product)
+      end
     end
   end
 end

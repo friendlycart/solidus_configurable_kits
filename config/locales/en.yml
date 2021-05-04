@@ -4,6 +4,10 @@
 en:
   solidus_configurable_kits:
     kits: Kits
+    admin:
+      kit_requirements:
+        new:
+          new_kit_requirement: New Kit Requirement
   activerecord:
     models:
       solidus_configurable_kits/requirement:

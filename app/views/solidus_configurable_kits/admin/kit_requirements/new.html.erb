@@ -1,0 +1,11 @@
+<%= render 'spree/admin/shared/product_tabs', current: 'Kits' %>
+<% admin_breadcrumb(link_to(plural_resource_name(SolidusConfigurableKits::Requirement), collection_url)) %>
+<% admin_breadcrumb(t('spree.actions.new')) %>
+
+<%= form_with model: @product.kit_requirements.build, url: collection_url  do |form| %>
+  <fieldset>
+    <legend><%= t('.new_kit_requirement') %></legend>
+    <%= render partial: 'form', locals: { form: form } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>
