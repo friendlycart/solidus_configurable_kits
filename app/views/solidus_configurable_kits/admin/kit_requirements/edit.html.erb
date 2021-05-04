@@ -1,0 +1,14 @@
+<%= render 'spree/admin/shared/product_tabs', current: 'Kits' %>
+<% admin_breadcrumb(link_to(plural_resource_name(SolidusConfigurableKits::Requirement), collection_url)) %>
+<% admin_breadcrumb(t('spree.actions.edit')) %>
+
+<%= form_with model: @kit_requirement, scope: :kit_requirement, url: object_url(@kit_requirement)  do |form| %>
+<fieldset>
+  <legend> <%= t('.edit_price') %> </legend>
+  <%= render 'form', form: form %>
+
+  <% if can?(:update, @kit_requirement) %>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+  <% end %>
+</fieldset>
+<% end %>

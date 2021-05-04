@@ -1,0 +1,29 @@
+<fieldset class="no-border-bottom">
+  <legend align="center"><%= plural_resource_name(SolidusConfigurableKits::Requirement) %></legend>
+  <table class="index kits">
+    <thead data-hook="kits_header">
+      <tr>
+        <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:required_product) %></th>
+        <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:quantity) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% kit_requirements.each do |kit_requirement| %>
+      <tr id="<%= spree_dom_id kit_requirement %>">
+        <td><%= kit_requirement.required_product.name %></td>
+        <td><%= kit_requirement.quantity %></td>
+        <td class="actions">
+          <% if can?(:update, kit_requirement) %>
+          <%= link_to_edit(kit_requirement, no_text: true) %>
+          <% end %>
+          <% if can?(:destroy, kit_requirement) %>
+          &nbsp;
+          <%= link_to_delete(kit_requirement, no_text: true) %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>

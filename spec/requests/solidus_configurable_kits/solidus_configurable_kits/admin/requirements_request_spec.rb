@@ -7,7 +7,7 @@ RSpec.describe "SolidusConfigurableKits::Admin::Requirements", type: :request do
 
   describe "GET /index" do
     it "returns http success" do
-      get "/admin/products/#{product.id}/kit_requirements"
+      get "/admin/products/#{product.slug}/kit_requirements"
       expect(response).to have_http_status(:success)
     end
   end

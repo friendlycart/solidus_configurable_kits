@@ -1,6 +1,12 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Kits' %>
 <% admin_breadcrumb(plural_resource_name(SolidusConfigurableKits::Requirement)) %>
 
+<% content_for :page_actions do %>
+  <li id="new_requirement_link">
+    <%= link_to t(".new_kit_requirement"), new_object_url, class: 'btn btn-primary' %>
+  </li>
+<% end if can?(:create, SolidusConfigurableKits::Requirement) %>
+
 <% if @kit_requirements.any? %>
   <%= render "table", kit_requirements: @kit_requirements %>
 <% else %>

@@ -5,7 +5,7 @@
       <%= form.select :required_product_id,
                   Spree::Product.all.map { |p| [p.name, p.id] },
                   {},
-                  class: "custom-select fullwidth", disabled: !form.object.new_record? %>
+                  class: "custom-select fullwidth" %>
     <% end %>
   </div>
   <div class="col-4">
