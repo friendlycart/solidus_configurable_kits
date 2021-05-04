@@ -1,1 +1,20 @@
-FORM
+<div class="row">
+  <div class="col-8">
+    <%= form.field_container :required_product do %>
+      <%= form.label :required_product %>
+      <%= form.select :required_product_id,
+                  Spree::Product.all.map { |p| [p.name, p.id] },
+                  {},
+                  class: "custom-select fullwidth", disabled: !form.object.new_record? %>
+    <% end %>
+  </div>
+  <div class="col-4">
+    <%= form.field_container :quantity do %>
+      <%= form.label :quantity %>
+      <%= form.field_hint :quantity %>
+      <%= form.number_field :quantity, default: 1, step: 1, class: "fullwidth" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="clear"></div>

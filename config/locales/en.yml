@@ -13,3 +13,7 @@ en:
       solidus_configurable_kits/requirement:
         one: Kit Requirement
         other: Kit Requirements
+  spree:
+    hints:
+      solidus_configurable_kits/requirement:
+        quantity: How many of this product must be chosen
