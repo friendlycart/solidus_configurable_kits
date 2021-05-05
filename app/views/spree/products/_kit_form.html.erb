@@ -1,0 +1,93 @@
+<%= form_for :order, url: populate_orders_path do |f| %>
+  <div id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+    <% if @product.variants_and_option_values_for(current_pricing_options).any? %>
+      <div id="product-variants" class="columns five alpha">
+        <h6 class="product-section-title"><%= t('spree.variants') %></h6>
+        <ul>
+          <% @product.variants_and_option_values_for(current_pricing_options).each_with_index do |variant, index| %>
+            <li>
+              <%= radio_button_tag "variant_id", variant.id, index == 0, 'data-price' => variant.price_for_options(current_pricing_options)&.money %>
+              <%= label_tag "variant_id_#{ variant.id }" do %>
+                <span class="variant-description">
+                  <%= variant_options variant %>
+                </span>
+                <% if variant_price variant %>
+                  <span class="price diff"><%= variant_price variant %></span>
+                <% end %>
+
+                <% unless variant.can_supply? %>
+                  <span class="out-of-stock"><%= t('spree.out_of_stock') %></span>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <%= hidden_field_tag "variant_id", @product.master.id %>
+    <% end %>
+
+    <% @product.kit_requirements.each do |kit_requirement| %>
+      <h2> <%= kit_requirement.name %> </h2>
+
+      <% required_product = kit_requirement.required_product %>
+      <% if required_product.variants.any? %>
+        <% if kit_requirement.description.present? %>
+          <p> <%= kit_requirement.description %> </p>
+        <% end %>
+        <% kit_requirement.quantity.times do %>
+          <%= label_tag 'kit_variants[]' do %>
+            Please choose a <%= kit_requirement.name %> <br>
+            <%= select_tag 'kit_variants[]',
+                          options_from_collection_for_select(kit_requirement.required_product.variants, "id", "options_text"),
+                          required: true,
+                          include_blank: true %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% kit_requirement.quantity.times do %>
+          <%= hidden_field_tag 'kit_variants[]', required_product.master.id %>
+        <% end %>
+        <p>
+          <%= kit_requirement.description %> <br>
+          Includes <%= pluralize(kit_requirement.quantity, kit_requirement.required_product.name, ) %> as <%= kit_requirement.name %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <% if @product.price_for_options(current_pricing_options) and !@product.price.nil? %>
+      <div data-hook="product_price" class="columns five <%= !@product.has_variants? ? 'alpha' : 'omega' %>">
+
+        <div id="product-price">
+          <h6 class="product-section-title"><%= t('spree.price') %></h6>
+          <div>
+            <span class="price selling" itemprop="price" content="<%= @product.price_for_options(current_pricing_options).amount %>">
+              <%= display_price(@product) %>
+            </span>
+            <span itemprop="priceCurrency" content="<%= current_pricing_options.currency %>"></span>
+          </div>
+
+          <% if @product.master.can_supply? %>
+            <link itemprop="availability" href="http://schema.org/InStock" />
+          <% elsif @product.variants.empty? %>
+            <br />
+            <span class="out-of-stock"><%= t('spree.out_of_stock') %></span>
+          <% end %>
+        </div>
+
+        <div class="add-to-cart">
+          <%= number_field_tag :quantity, 1, class: 'title', min: 1 %>
+          <%= button_tag class: 'large primary', id: 'add-to-cart-button', type: :submit do %>
+            <%= t('spree.add_to_cart') %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+        <div id="product-price">
+          <br>
+          <div><span class="price selling" itemprop="price"><%= t('spree.product_not_available_in_this_currency') %></span></div>
+        </div>
+    <% end %>
+  </div>
+<% end %>

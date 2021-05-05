@@ -1,0 +1,5 @@
+<% if @product.kit_requirements.any? %>
+  <%= render "kit_form" %>
+<% else %>
+  <%= render_original %>
+<% end %>
