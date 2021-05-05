@@ -8,12 +8,21 @@ module SolidusConfigurableKits
       @order = order
     end
 
-    def call(variant, quantity, kit_variants)
-      line_item = order.contents.add(variant, quantity)
+    def call(variant, quantity, kit_variant_quantities)
+      line_item = order.line_items.new(
+        variant: variant,
+        quantity: quantity
+      )
 
-      kit_variants.each do |kit_variant|
-        order.contents.add(kit_variant, quantity)
+      kit_variant_quantities.each do |kit_variant, kit_quantity|
+        order.line_items.new(
+          variant: kit_variant,
+          quantity: kit_quantity * quantity,
+          kit: line_item
+        )
       end
+
+      order.save!
 
       line_item
     end

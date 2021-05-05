@@ -17,13 +17,14 @@ module SolidusConfigurableKits
       variant  = ::Spree::Variant.find(params[:variant_id])
       quantity = params[:quantity].present? ? params[:quantity].to_i : 1
       kit_variants = ::Spree::Variant.where(id: params[:kit_variants])
+      kit_variant_quantities = kit_variants.map { |v| [v, params[:kit_variants].select { |id| id.to_i == v.id }.length] }
 
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
       if !quantity.between?(1, 2_147_483_647)
         @order.errors.add(:base, t('spree.please_enter_reasonable_quantity'))
       else
         begin
-          @line_item = SolidusConfigurableKits::AddKit.new(@order).call(variant, quantity, kit_variants)
+          @line_item = SolidusConfigurableKits::AddKit.new(@order).call(variant, quantity, kit_variant_quantities)
         rescue ActiveRecord::RecordInvalid => error
           @order.errors.add(:base, error.record.errors.full_messages.join(", "))
         end
