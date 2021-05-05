@@ -22,6 +22,10 @@ module SolidusConfigurableKits
         )
       end
 
+      order.recalculate
+      order.save!
+      PromotionHandler::Cart.new(order, line_item).activate
+      order.recalculate
       order.save!
 
       line_item
