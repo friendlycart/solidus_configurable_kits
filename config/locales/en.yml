@@ -11,6 +11,11 @@ en:
         index:
           new_kit_requirement: New Kit Requirement
   activerecord:
+    attributes:
+      solidus_configurable_kits/requirement:
+        name: Name
+        description: Description
+        required_product: Required Product
     models:
       solidus_configurable_kits/requirement:
         one: Kit Requirement
@@ -18,4 +23,6 @@ en:
   spree:
     hints:
       solidus_configurable_kits/requirement:
+        name: The name for this requirement. Will be displayed as the label for a select box.
         quantity: How many of this product must be chosen
+        description: A description for this requirement that tells users what it is for.

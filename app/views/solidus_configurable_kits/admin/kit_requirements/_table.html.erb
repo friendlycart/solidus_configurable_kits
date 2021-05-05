@@ -3,6 +3,7 @@
   <table class="index kits">
     <thead data-hook="kits_header">
       <tr>
+        <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:name) %></th>
         <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:required_product) %></th>
         <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:quantity) %></th>
         <th class="actions"></th>
@@ -11,6 +12,7 @@
     <tbody>
       <% kit_requirements.each do |kit_requirement| %>
       <tr id="<%= spree_dom_id kit_requirement %>">
+        <td><%= kit_requirement.name %></td>
         <td><%= kit_requirement.required_product.name %></td>
         <td><%= kit_requirement.quantity %></td>
         <td class="actions">
