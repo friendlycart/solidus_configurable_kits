@@ -6,7 +6,8 @@ module SolidusConfigurableKits
       def self.prepended(base)
         base.has_many :kit_items,
                       class_name: "Spree::LineItem",
-                      foreign_key: :kit_item_id
+                      foreign_key: :kit_item_id,
+                      dependent: :destroy
         base.belongs_to :kit, class_name: "Spree::LineItem", foreign_key: :kit_item_id, optional: true
       end
 
