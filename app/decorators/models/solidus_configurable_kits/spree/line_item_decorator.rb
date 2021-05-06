@@ -25,12 +25,12 @@ module SolidusConfigurableKits
       private
 
       def update_kit_item_quantities
-        if quantity_changed?
-          kit_items.each do |kit_item|
-            single_kit_item_quantity = kit_item.quantity / quantity_was
-            kit_item.quantity = single_kit_item_quantity * quantity
-            kit_item.save
-          end
+        return unless quantity_changed?
+
+        kit_items.each do |kit_item|
+          single_kit_item_quantity = kit_item.quantity / quantity_was
+          kit_item.quantity = single_kit_item_quantity * quantity
+          kit_item.save
         end
       end
 

@@ -27,7 +27,7 @@ module SolidusConfigurableKits
       )
     end
 
-    def self.from_context(context, kit_item = false)
+    def self.from_context(context, kit_item: false)
       new(
         currency: context.current_store&.default_currency.presence || ::Spree::Config[:currency],
         country_iso: context.current_store&.cart_tax_country_iso.presence,
