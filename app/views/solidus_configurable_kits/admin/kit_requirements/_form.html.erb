@@ -9,7 +9,7 @@
     <%= form.field_container :required_product do %>
       <%= form.label :required_product %>
       <%= form.select :required_product_id,
-                  Spree::Product.all.map { |p| [p.name, p.id] },
+                  Spree::Product.with_kit_item_prices.map { |p| [p.name, p.id] },
                   {},
                   class: "custom-select fullwidth" %>
     <% end %>
