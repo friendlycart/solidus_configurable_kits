@@ -22,11 +22,12 @@ module SolidusConfigurableKits
         )
       end
 
+      order.save! # Persist the order with the new line items
+
+      # Handle any promotions
+      ::Spree::PromotionHandler::Cart.new(order, line_item).activate
+      # Update order totals
       order.recalculate
-      order.save!
-      PromotionHandler::Cart.new(order, line_item).activate
-      order.recalculate
-      order.save!
 
       line_item
     end
