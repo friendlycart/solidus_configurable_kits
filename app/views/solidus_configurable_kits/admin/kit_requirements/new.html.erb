@@ -2,7 +2,7 @@
 <% admin_breadcrumb(link_to(plural_resource_name(SolidusConfigurableKits::Requirement), collection_url)) %>
 <% admin_breadcrumb(t('spree.actions.new')) %>
 
-<%= form_with model: @product.kit_requirements.build, scope: :kit_requirement, url: collection_url  do |form| %>
+<%= form_with model: @product.kit_requirements.build, scope: :kit_requirement, url: collection_url, local: true do |form| %>
   <fieldset>
     <legend><%= t('.new_kit_requirement') %></legend>
     <%= render partial: 'form', locals: { form: form } %>
