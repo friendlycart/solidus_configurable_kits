@@ -9,6 +9,7 @@ module SolidusConfigurableKits
           foreign_key: :product_id
         base.has_many :kits, through: :kit_requirements, source: :product
         base.has_many :required_kit_products, through: :kit_requirements, source: :required_product
+        base.delegate :resilient_money_price, to: :master
       end
 
       ::Spree::Product.prepend self

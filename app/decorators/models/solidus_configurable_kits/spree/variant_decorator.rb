@@ -31,12 +31,15 @@ module SolidusConfigurableKits
       end
 
       def kit_title(pricing_options)
-        kit_price = if respond_to?(:price_for_options)
-          price_for_options(pricing_options).money 
+        "#{options_text} (+ #{resilient_money_price(pricing_options)})"
+      end
+
+      def resilient_money_price(pricing_options)
+        if respond_to?(:price_for_options)
+          price_for_options(pricing_options)&.money 
         else 
           price_for(pricing_options)
         end
-        "#{options_text} (+ #{kit_price})"
       end
 
       ::Spree::Variant.prepend self

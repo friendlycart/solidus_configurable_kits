@@ -63,13 +63,13 @@
       <% end %>
     <% end %>
 
-    <% if @product.price_for_options(current_pricing_options) and !@product.price.nil? %>
+    <% if @product.resilient_money_price(current_pricing_options) and !@product.price.nil? %>
       <div data-hook="product_price" class="columns five <%= !@product.has_variants? ? 'alpha' : 'omega' %>">
 
         <div id="product-price">
           <h6 class="product-section-title"><%= t('spree.price') %></h6>
           <div>
-            <span class="price selling" itemprop="price" content="<%= @product.price_for_options(current_pricing_options).amount %>">
+            <span class="price selling" itemprop="price" content="<%= @product.resilient_money_price(current_pricing_options).to_d.to_s %>">
               <%= display_price(@product) %>
             </span>
             <span itemprop="priceCurrency" content="<%= current_pricing_options.currency %>"></span>
