@@ -40,7 +40,14 @@
           <%= label_tag 'kit_variants[]' do %>
             Please choose a <%= kit_requirement.name %> <br>
             <%= select_tag 'kit_variants[]',
-                          options_from_collection_for_select(kit_requirement.required_product.variants, "id", "options_text"),
+                          options_for_select(
+                            kit_requirement.required_product.variants_and_option_values_for(current_kit_pricing_options).map do |variant|
+                              [
+                                "#{variant.options_text} (+ #{variant.price_for_options(current_kit_pricing_options).money.to_s})",
+                                variant.id
+                              ]
+                            end
+                          ),
                           required: true,
                           include_blank: true %>
           <% end %>
