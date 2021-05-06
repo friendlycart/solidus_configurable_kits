@@ -10,8 +10,12 @@ en:
           new_kit_requirement: New Kit Requirement
         index:
           new_kit_requirement: New Kit Requirement
+        edit:
+          edit_kit_requirement: Edit Kit Requirement
   activerecord:
     attributes:
+      spree/price:
+        kit_item: Kit Price?
       solidus_configurable_kits/requirement:
         name: Name
         description: Description
