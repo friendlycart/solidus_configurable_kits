@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe SolidusConfigurableKits::AddKit do
+  subject { described_class.new(order).call(variant, quantity, kit_variant_quantities) }
+
   let(:order) { create(:order) }
   let(:variant) { create(:variant) }
   let(:kit_requirement) { create(:kit_requirement, product: variant.product) }
@@ -10,7 +12,6 @@ RSpec.describe SolidusConfigurableKits::AddKit do
   let(:kit_variant_quantities) { kit_variants.map { |v| [v, 1] } }
 
   let(:quantity) { 1 }
-  subject { described_class.new(order).call(variant, quantity, kit_variant_quantities) }
 
   it "adds kit variants to the order" do
     subject

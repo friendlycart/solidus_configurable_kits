@@ -3,7 +3,7 @@
 module SolidusConfigurableKits
   module Spree
     module OrderDecorator
-       def self.prepended(base)
+      def self.prepended(base)
         base.register_line_item_comparison_hook :never_match_kit_items
       end
 

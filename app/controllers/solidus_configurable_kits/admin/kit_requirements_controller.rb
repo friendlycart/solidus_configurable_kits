@@ -5,8 +5,7 @@ module SolidusConfigurableKits
     class KitRequirementsController < ::Spree::Admin::ResourceController
       belongs_to 'spree/product', find_by: :slug
 
-      def index
-      end
+      def index; end
 
       private
 

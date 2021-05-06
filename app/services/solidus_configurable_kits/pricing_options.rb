@@ -11,10 +11,10 @@ module SolidusConfigurableKits
     end
 
     def self.from_line_item(line_item)
-      tax_address = line_item.order.try!(:tax_address)
+      tax_address = line_item.order&.tax_address
       new(
         currency: line_item.currency || ::Spree::Config.currency,
-        country_iso: tax_address && tax_address.country.try!(:iso),
+        country_iso: tax_address && tax_address.country&.iso,
         kit_item: line_item.kit_item?
       )
     end
@@ -29,8 +29,8 @@ module SolidusConfigurableKits
 
     def self.from_context(context, kit_item = false)
       new(
-        currency: context.current_store.try!(:default_currency).presence || ::Spree::Config[:currency],
-        country_iso: context.current_store.try!(:cart_tax_country_iso).presence,
+        currency: context.current_store&.default_currency.presence || ::Spree::Config[:currency],
+        country_iso: context.current_store&.cart_tax_country_iso.presence,
         kit_item: kit_item
       )
     end

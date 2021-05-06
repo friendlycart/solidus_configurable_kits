@@ -13,8 +13,10 @@ module SolidusConfigurableKits
       end
 
       def add_javascripts
-        append_file 'vendor/assets/javascripts/spree/frontend/all.js', "//= require spree/frontend/solidus_configurable_kits\n"
-        append_file 'vendor/assets/javascripts/spree/backend/all.js', "//= require spree/backend/solidus_configurable_kits\n"
+        append_file 'vendor/assets/javascripts/spree/frontend/all.js',
+          "//= require spree/frontend/solidus_configurable_kits\n"
+        append_file 'vendor/assets/javascripts/spree/backend/all.js',
+          "//= require spree/backend/solidus_configurable_kits\n"
       end
 
       def add_stylesheets
@@ -27,9 +29,9 @@ module SolidusConfigurableKits
       end
 
       def configure_pricing_options
-        inject_into_file 'config/initializers/spree.rb', 
-                         "  config.variant_price_selector_class = \"SolidusConfigurableKits::PriceSelector\"\n", 
-                         after: "Spree.config do |config|\n", verbose: true # rubocop:disable Layout/LineLength
+        inject_into_file 'config/initializers/spree.rb',
+          "  config.variant_price_selector_class = \"SolidusConfigurableKits::PriceSelector\"\n",
+          after: "Spree.config do |config|\n", verbose: true
       end
 
       def run_migrations
@@ -41,12 +43,11 @@ module SolidusConfigurableKits
         end
       end
 
-
-    def install_routes
-      routes_file_path = File.join('config', 'routes.rb')
-      unless File.read(routes_file_path).include? MOUNT_ROUTE
-        insert_into_file routes_file_path, after: "Rails.application.routes.draw do\n" do
-          <<-RUBY
+      def install_routes
+        routes_file_path = File.join('config', 'routes.rb')
+        unless File.read(routes_file_path).include? MOUNT_ROUTE
+          insert_into_file routes_file_path, after: "Rails.application.routes.draw do\n" do
+            <<-RUBY
   # This line mounts Solidus's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
@@ -54,17 +55,17 @@ module SolidusConfigurableKits
   # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
   #{MOUNT_ROUTE}, at: '/'
 
-          RUBY
+            RUBY
+          end
+        end
+
+        unless options[:quiet]
+          puts "*" * 50
+          puts "We added the following line to your application's config/routes.rb file:"
+          puts " "
+          puts "    #{MOUNT_ROUTE}, at: '/'"
         end
       end
-
-      unless options[:quiet]
-        puts "*" * 50
-        puts "We added the following line to your application's config/routes.rb file:"
-        puts " "
-        puts "    #{MOUNT_ROUTE}, at: '/'"
-      end
-    end
     end
   end
 end
