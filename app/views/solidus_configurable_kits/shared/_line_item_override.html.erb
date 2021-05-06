@@ -1,0 +1,7 @@
+<% order.line_items.reject(&:kit_item?).each do |line_item| %>
+  <% if line_item.kit_items.any? %>
+    <%= render partial: 'spree/orders/kit_line_item', locals: { line_item: line_item, order_form: order_form } %>
+  <% else %>
+    <%= render partial: 'spree/orders/line_item', locals: { line_item: line_item, order_form: order_form } %>
+  <% end %>
+<% end %>

@@ -10,10 +10,15 @@ module SolidusConfigurableKits
           dependent: :destroy
         base.belongs_to :kit, class_name: "Spree::LineItem", foreign_key: :kit_item_id, optional: true
         base.before_update :update_kit_item_quantities
+        base.money_methods :kit_total
       end
 
       def kit_item?
         kit.present?
+      end
+
+      def kit_total
+        amount + kit_items.sum(&:amount)
       end
 
       def assign_attributes(*)
