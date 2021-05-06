@@ -43,7 +43,7 @@
                           options_for_select(
                             kit_requirement.required_product.variants_and_option_values_for(current_kit_pricing_options).map do |variant|
                               [
-                                "#{variant.options_text} (+ #{variant.price_for_options(current_kit_pricing_options).money.to_s})",
+                                variant.kit_title(current_kit_pricing_options),
                                 variant.id
                               ]
                             end

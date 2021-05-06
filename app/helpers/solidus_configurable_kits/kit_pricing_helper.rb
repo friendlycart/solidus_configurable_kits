@@ -3,9 +3,7 @@
 module SolidusConfigurableKits
   module KitPricingHelper
     def current_kit_pricing_options
-      SolidusConfigurableKits::PricingOptions.from_context(
-        self, kit_item: true
-      )
+      SolidusConfigurableKits::PricingOptions.from_context(self, kit_item: true)
     end
   end
 end
