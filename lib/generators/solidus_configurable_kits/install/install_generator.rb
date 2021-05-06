@@ -26,6 +26,12 @@ module SolidusConfigurableKits
         run 'bin/rails railties:install:migrations FROM=solidus_configurable_kits'
       end
 
+      def configure_pricing_options
+        inject_into_file 'config/initializers/spree.rb', 
+                         "  config.variant_price_selector_class = \"SolidusConfigurableKits::PriceSelector\"\n", 
+                         after: "Spree.config do |config|\n", verbose: true # rubocop:disable Layout/LineLength
+      end
+
       def run_migrations
         run_migrations = options[:auto_run_migrations] || ['', 'y', 'Y'].include?(ask('Would you like to run the migrations now? [Y/n]')) # rubocop:disable Layout/LineLength
         if run_migrations
