@@ -16,6 +16,11 @@ module SolidusConfigurableKits
         kit.present?
       end
 
+      def assign_attributes(*)
+        return if kit_item?
+        super
+      end
+
       private
 
       def update_kit_item_quantities

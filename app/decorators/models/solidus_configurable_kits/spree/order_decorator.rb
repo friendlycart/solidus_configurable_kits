@@ -10,7 +10,7 @@ module SolidusConfigurableKits
       private
 
       def never_match_kit_items(line_item, _options)
-        !line_item.kit_item?
+        !(line_item.kit_item? || line_item.kit_items.present?)
       end
 
       ::Spree::Order.prepend self
