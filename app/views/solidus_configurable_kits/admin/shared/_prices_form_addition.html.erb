@@ -1,0 +1,8 @@
+<div class="col-4">
+  <%= f.field_container :kit_item do %>
+    <label>
+      <%= f.check_box :kit_item, disabled: !f.object.new_record? %>
+      <%= Spree::Price.human_attribute_name :kit_item %>
+    </label>
+  <% end %>
+</div>
