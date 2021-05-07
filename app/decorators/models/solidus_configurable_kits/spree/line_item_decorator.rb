@@ -21,6 +21,10 @@ module SolidusConfigurableKits
         amount + kit_items.sum(&:amount)
       end
 
+      def kit?
+        variant.product.kit_requirements.any?
+      end
+
       def assign_attributes(*)
         return if kit_item?
 
