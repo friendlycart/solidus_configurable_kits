@@ -13,6 +13,12 @@ en:
         edit:
           edit_kit_requirement: Edit Kit Requirement
   activerecord:
+    errors:
+      models:
+        solidus_configurable_kits/requirement:
+          attributes:
+            required_product:
+              needs_at_least_one_variant_with_a_kit_price: needs to have at least one variant with a kit price
     attributes:
       spree/price:
         kit_item: Kit Price?
