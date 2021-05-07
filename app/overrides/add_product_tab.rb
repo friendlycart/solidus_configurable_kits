@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 Deface::Override.new(virtual_path: "spree/admin/shared/_product_tabs",
                      name: "configurable_kits_admin_product_tabs",

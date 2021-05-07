@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 Deface::Override.new(
   virtual_path: "spree/orders/_form",
