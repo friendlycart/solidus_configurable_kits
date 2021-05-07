@@ -36,8 +36,8 @@ module SolidusConfigurableKits
 
       def resilient_money_price(pricing_options)
         if respond_to?(:price_for_options)
-          price_for_options(pricing_options)&.money 
-        else 
+          price_for_options(pricing_options)&.money
+        else
           price_for(pricing_options)
         end
       end

@@ -15,10 +15,10 @@ module SolidusConfigurableKits
       )
 
       kit_variant_quantities.each do |kit_variant, kit_quantity|
-        order.line_items.new(
+        line_item.kit_items.new(
           variant: kit_variant,
           quantity: kit_quantity * quantity,
-          kit: line_item
+          order: order
         )
       end
 

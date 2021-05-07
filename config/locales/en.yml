@@ -19,9 +19,15 @@ en:
           attributes:
             required_product:
               needs_at_least_one_variant_with_a_kit_price: needs to have at least one variant with a kit price
+        spree/line_item:
+          attributes:
+            kit_items:
+              do_not_fulfill_product_kit_requirements: do not fulfill product kit requirements
     attributes:
       spree/price:
         kit_item: Kit Price?
+      spree/line_item:
+        kit_items: Kit Items
       solidus_configurable_kits/requirement:
         name: Name
         description: Description
