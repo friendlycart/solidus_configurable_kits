@@ -10,9 +10,9 @@ module SolidusConfigurableKits
     private
 
     def required_product_has_kit_item_prices
-      if required_product&.prices&.where(kit_item: true)&.none?
-        errors.add(:required_product, :needs_at_least_one_variant_with_a_kit_price)
-      end
+      return if required_product&.prices&.where(kit_item: true)&.any?
+
+      errors.add(:required_product, :needs_at_least_one_variant_with_a_kit_price)
     end
   end
 end

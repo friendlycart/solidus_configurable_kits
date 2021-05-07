@@ -59,12 +59,14 @@ module SolidusConfigurableKits
           end
         end
 
-        unless options[:quiet]
-          puts "*" * 50
-          puts "We added the following line to your application's config/routes.rb file:"
-          puts " "
-          puts "    #{MOUNT_ROUTE}, at: '/'"
-        end
+        return if options[:quiet]
+
+        # rubocop:disable Rails/Output
+        puts "*" * 50
+        puts "We added the following line to your application's config/routes.rb file:"
+        puts " "
+        puts "    #{MOUNT_ROUTE}, at: '/'"
+        # rubocop:enable Rails/Output
       end
     end
   end

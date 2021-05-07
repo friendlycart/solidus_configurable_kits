@@ -9,7 +9,11 @@ module SolidusConfigurableKits
           foreign_key: :kit_item_id,
           dependent: :destroy,
           inverse_of: :kit
-        base.belongs_to :kit, class_name: "Spree::LineItem", foreign_key: :kit_item_id, optional: true, inverse_of: :kit_items
+        base.belongs_to :kit,
+          class_name: "Spree::LineItem",
+          foreign_key: :kit_item_id,
+          optional: true,
+          inverse_of: :kit_items
         base.before_validation :update_kit_item_quantities
         base.money_methods :kit_total
         base.validate :all_required_kit_items_present
@@ -47,11 +51,9 @@ module SolidusConfigurableKits
 
       def all_required_kit_items_present
         return true unless kit?
-        return true if quantity.zero?
+        return true if quantity.zero? || required_kit_items_fulfilled?
 
-        if !required_kit_items_fulfilled?
-          errors.add(:kit_items, :do_not_fulfill_product_kit_requirements)
-        end
+        errors.add(:kit_items, :do_not_fulfill_product_kit_requirements)
       end
 
       def required_kit_items_fulfilled?
