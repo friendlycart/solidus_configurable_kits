@@ -15,6 +15,10 @@ module SolidusConfigurableKits
       ::ActionView::Base.include SolidusConfigurableKits::KitPricingHelper
     end
 
+    initializer 'solidus_configurable_kits.add_permitted_attribute' do
+      ::Spree::PermittedAttributes.line_item_attributes << { kit_variant_ids: [] }
+    end
+
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec

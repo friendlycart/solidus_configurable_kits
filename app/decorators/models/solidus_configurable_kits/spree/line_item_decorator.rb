@@ -15,8 +15,10 @@ module SolidusConfigurableKits
           optional: true,
           inverse_of: :kit_items
         base.before_validation :update_kit_item_quantities
+        base.before_validation :create_kit_items
         base.money_methods :kit_total
         base.validate :all_required_kit_items_present
+        base.attr_accessor :kit_variant_ids
       end
 
       def kit_item?
@@ -38,6 +40,23 @@ module SolidusConfigurableKits
       end
 
       private
+
+      def create_kit_items
+        return unless new_record?
+        return unless kit?
+
+        kit_variant_quantities = kit_variant_ids.uniq.map do |id|
+          [id, kit_variants.select { |kv_id| kv_id == id }.length]
+        end.to_h
+
+        kit_variant_quantities.each do |kit_variant_id, kit_quantity|
+          kit_items.new(
+            variant_id: kit_variant_id,
+            quantity: kit_quantity * quantity,
+            order: order
+          )
+        end
+      end
 
       def update_kit_item_quantities
         return if new_record? || !quantity_changed?

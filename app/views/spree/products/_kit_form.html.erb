@@ -37,9 +37,9 @@
           <p> <%= kit_requirement.description %> </p>
         <% end %>
         <% kit_requirement.quantity.times do %>
-          <%= label_tag 'kit_variants[]' do %>
+          <%= label_tag 'kit_variant_ids[]' do %>
             Please choose a <%= kit_requirement.name %> <br>
-            <%= select_tag 'kit_variants[]',
+            <%= select_tag 'kit_variant_ids[]',
                           options_for_select(
                             kit_requirement.required_product.variants_and_option_values_for(current_kit_pricing_options).map do |variant|
                               [
@@ -56,7 +56,7 @@
         <% end %>
       <% else %>
         <% kit_requirement.quantity.times do %>
-          <%= hidden_field_tag 'kit_variants[]',
+          <%= hidden_field_tag 'kit_variant_ids[]',
             required_product.master.id,
             data: { price: required_product.resilient_money_price(current_kit_pricing_options).to_d },
             class: "kit_variant_input" %>
