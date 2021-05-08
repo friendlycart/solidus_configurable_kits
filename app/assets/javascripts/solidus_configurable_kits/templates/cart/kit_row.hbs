@@ -1,0 +1,38 @@
+<td class="line-item-select-kit-item fullwidth" colspan="2">
+  <label class="fullwidth">
+    {{ line_item.kitRequirementName }}
+    <select
+      id="kit-item-select"
+      class="js-kit-item-select fullwidth"
+      name="variant_id"
+    >
+      {{#each options}}
+        <option
+          value="{{this.id}}"
+          {{#if this.selected}}
+            selected="selected"
+          {{/if}}
+        >
+          {{#if this.options_text}}
+            {{ this.options_text }}
+          {{else}}
+            {{this.name}}
+          {{/if}}
+          (+ {{ this.kit_price }})
+          </option>
+      {{/each}}
+    </select>
+  </label>
+
+</td>
+<td class="line-item-price">
+  <br>{{ line_item.variant.kit_price }}
+</td>
+<td class="line-item-qty-show">
+  <br>{{ line_item.quantity }}
+</td>
+<td class="line-item-total">
+  <br>{{ line_item.display_amount }}
+</td>
+<td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
+</td>
