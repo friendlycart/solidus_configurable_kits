@@ -16,7 +16,7 @@ module SolidusConfigurableKits
     end
 
     initializer 'solidus_configurable_kits.add_permitted_attribute' do
-      ::Spree::PermittedAttributes.line_item_attributes << { kit_variant_ids: [] }
+      ::Spree::PermittedAttributes.line_item_attributes << { kit_variant_ids: {} }
     end
 
     # use rspec for tests

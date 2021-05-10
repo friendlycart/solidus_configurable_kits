@@ -52,11 +52,14 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
       variant.kit_requirements.map((kit_requirement) => (
         {
           kit: this.model,
-          product_id: kit_requirement.required_product_id,
           quantity: 1,
-          kitRequirementName: kit_requirement.name
+          kit_requirement: {
+            id: kit_requirement.id,
+            name: kit_requirement.name,
+            required_product_id: kit_requirement.required_product_id
+          }
         }
-      ).forEach((element) =>
+      )).forEach((element) =>
         this.model.collection.push(element)
       )
     }
@@ -65,7 +68,7 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
   kitItems: function() {
     return this.model.collection.models.filter((el) => {
       if (this.model.isNew()) {
-        return el.model.get("kit") === this.model
+        return el.get("kit") === this.model
       } else {
         return el.get("kit")?.id == this.model.get("id")
       }
@@ -87,7 +90,12 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
     var attrs = {
       quantity: parseInt(this.$('input.line_item_quantity').val()),
       variant_id: this.model.get('variant').id,
-      kit_variant_ids: this.kitItems().map((i) => i.get("variant").id)
+      kit_variant_ids: Object.fromEntries(this.kitItems().map((i) =>
+        [
+          i.get("kit_requirement").id,
+          i.get("variant").id
+        ]
+      ))
     }
 
     var model = this.model;

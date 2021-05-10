@@ -15,6 +15,11 @@ json.cache! [I18n.locale, line_item] do
   json.adjustments(line_item.adjustments) do |adjustment|
     json.partial!("spree/api/adjustments/adjustment", adjustment: adjustment)
   end
+  json.kit_requirement do
+    json.id line_item.kit_requirement.id
+    json.name line_item.kit_requirement.name
+    json.required_product_id line_item.kit_requirement.required_product_id
+  end if line_item.kit_requirement
   json.kit do |kit|
     json.partial!("spree/api/line_items/line_item", line_item: line_item.kit) if line_item.kit
   end

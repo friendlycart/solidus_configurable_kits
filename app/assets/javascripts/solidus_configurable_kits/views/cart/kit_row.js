@@ -15,7 +15,7 @@ SolidusConfigurableKits.Views.Cart.KitRow = Backbone.View.extend({
     var view = this;
     this.listenTo(this.model, "change", this.render);
     this.options = []
-    var productId = view.model.get("product_id") || view.model.get("variant").product_id
+    var productId = view.model.get("kit_requirement").required_product_id
     Spree.ajax({
       type: 'GET',
       url: Spree.pathFor('api/products/' + productId),

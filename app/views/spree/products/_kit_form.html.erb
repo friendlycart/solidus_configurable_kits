@@ -36,9 +36,9 @@
         <% if kit_requirement.description.present? %>
           <p> <%= kit_requirement.description %> </p>
         <% end %>
-          <%= label_tag 'kit_variant_ids[]' do %>
+          <%= label_tag "kit_variant_ids[#{kit_requirement.id}]" do %>
             Please choose a <%= kit_requirement.name %> <br>
-            <%= select_tag 'kit_variant_ids[]',
+            <%= select_tag "kit_variant_ids[#{kit_requirement.id}]",
                           options_for_select(
                             kit_requirement.required_product.variants_and_option_values_for(current_kit_pricing_options).map do |variant|
                               [
@@ -53,7 +53,7 @@
                           class: "kit_variant_input" %>
           <% end %>
       <% else %>
-        <%= hidden_field_tag 'kit_variant_ids[]',
+        <%= hidden_field_tag "kit_variant_ids[#{kit_requirement.id}]",
           required_product.master.id,
           data: { price: required_product.resilient_money_price(current_kit_pricing_options).to_d },
           class: "kit_variant_input" %>

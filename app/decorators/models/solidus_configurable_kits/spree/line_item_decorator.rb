@@ -14,6 +14,10 @@ module SolidusConfigurableKits
           foreign_key: :kit_item_id,
           optional: true,
           inverse_of: :kit_items
+        base.belongs_to :kit_requirement,
+          class_name: "::SolidusConfigurableKits::Requirement",
+          foreign_key: :requirement_id,
+          optional: true
         base.before_validation :update_kit_item_quantities
         base.before_validation :create_kit_items
         base.money_methods :kit_total
@@ -46,8 +50,9 @@ module SolidusConfigurableKits
         return unless kit?
         return unless kit_variant_ids?.present?
 
-        kit_variant_ids.each do |kit_variant_id|
+        kit_variant_ids.each do |requirement_id, kit_variant_id|
           kit_items.new(
+            requirement_id: requirement_id,
             variant_id: kit_variant_id,
             quantity: quantity,
             order: order
