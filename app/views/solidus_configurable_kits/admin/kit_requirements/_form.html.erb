@@ -4,24 +4,13 @@
   <%= form.text_field :name, required: true, class: "fullwidth" %>
 <% end %>
 
-<div class="row">
-  <div class="col-8">
-    <%= form.field_container :required_product do %>
-      <%= form.label :required_product %>
-      <%= form.select :required_product_id,
-                  Spree::Product.with_kit_item_prices.map { |p| [p.name, p.id] },
-                  {},
-                  class: "custom-select fullwidth" %>
-    <% end %>
-  </div>
-  <div class="col-4">
-    <%= form.field_container :quantity do %>
-      <%= form.label :quantity %>
-      <%= form.field_hint :quantity %>
-      <%= form.number_field :quantity, default: 1, step: 1, class: "fullwidth" %>
-    <% end %>
-  </div>
-</div>
+<%= form.field_container :required_product do %>
+  <%= form.label :required_product %>
+  <%= form.select :required_product_id,
+              Spree::Product.with_kit_item_prices.map { |p| [p.name, p.id] },
+              {},
+              class: "custom-select fullwidth" %>
+<% end %>
 
 <%= form.field_container :description do %>
   <%= form.label :description %>

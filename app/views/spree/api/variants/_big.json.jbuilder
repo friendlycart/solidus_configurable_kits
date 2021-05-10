@@ -13,7 +13,6 @@ json.cache! [I18n.locale, Spree::StockLocation.accessible_by(current_ability), v
   end
   json.kit_requirements variant.product.kit_requirements do |kit_requirement|
     json.required_product_id kit_requirement.required_product_id
-    json.quantity kit_requirement.quantity
     json.name kit_requirement.name
   end
 end

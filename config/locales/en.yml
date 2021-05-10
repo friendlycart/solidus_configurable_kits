@@ -40,5 +40,4 @@ en:
     hints:
       solidus_configurable_kits/requirement:
         name: The name for this requirement. Will be displayed as the label for a select box.
-        quantity: How many of this product must be chosen
         description: A description for this requirement that tells users what it is for.

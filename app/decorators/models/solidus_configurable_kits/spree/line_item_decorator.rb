@@ -46,14 +46,10 @@ module SolidusConfigurableKits
         return unless kit?
         return unless kit_variant_ids?.present?
 
-        kit_variant_quantities = kit_variant_ids.uniq.map do |id|
-          [id, kit_variant_ids.select { |kv_id| kv_id == id }.length]
-        end.to_h
-
-        kit_variant_quantities.each do |kit_variant_id, kit_quantity|
+        kit_variant_ids.each do |kit_variant_id|
           kit_items.new(
             variant_id: kit_variant_id,
-            quantity: kit_quantity * quantity,
+            quantity: quantity,
             order: order
           )
         end
@@ -63,8 +59,7 @@ module SolidusConfigurableKits
         return if new_record? || !quantity_changed?
 
         kit_items.each do |kit_item|
-          single_kit_item_quantity = kit_item.quantity / quantity_was
-          kit_item.quantity = single_kit_item_quantity * quantity
+          kit_item.quantity = quantity
           kit_item.save
         end
       end
@@ -77,17 +72,15 @@ module SolidusConfigurableKits
       end
 
       def required_kit_items_fulfilled?
-        required_products_and_quantities == kit_item_products_and_quantities
+        required_product_ids == kit_item_product_ids
       end
 
-      def required_products_and_quantities
-        product.kit_requirements.map { |kr| [kr.required_product_id, kr.quantity * quantity] }.to_h
+      def required_product_ids
+        Set.new(product.kit_requirements.map(&:required_product_id))
       end
 
-      def kit_item_products_and_quantities
-        kit_items.flat_map { |kit_item| [kit_item.product.id] * kit_item.quantity }.
-          group_by(&:itself).
-          transform_values(&:length)
+      def kit_item_product_ids
+        Set.new(kit_items.map(&:variant).map(&:product_id))
       end
 
       ::Spree::LineItem.prepend self

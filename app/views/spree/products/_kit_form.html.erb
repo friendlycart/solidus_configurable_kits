@@ -36,7 +36,6 @@
         <% if kit_requirement.description.present? %>
           <p> <%= kit_requirement.description %> </p>
         <% end %>
-        <% kit_requirement.quantity.times do %>
           <%= label_tag 'kit_variant_ids[]' do %>
             Please choose a <%= kit_requirement.name %> <br>
             <%= select_tag 'kit_variant_ids[]',
@@ -53,17 +52,14 @@
                           include_blank: true,
                           class: "kit_variant_input" %>
           <% end %>
-        <% end %>
       <% else %>
-        <% kit_requirement.quantity.times do %>
-          <%= hidden_field_tag 'kit_variant_ids[]',
-            required_product.master.id,
-            data: { price: required_product.resilient_money_price(current_kit_pricing_options).to_d },
-            class: "kit_variant_input" %>
-        <% end %>
+        <%= hidden_field_tag 'kit_variant_ids[]',
+          required_product.master.id,
+          data: { price: required_product.resilient_money_price(current_kit_pricing_options).to_d },
+          class: "kit_variant_input" %>
         <p>
           <%= kit_requirement.description %> <br>
-          Includes <%= pluralize(kit_requirement.quantity, kit_requirement.required_product.name, ) %> as <%= kit_requirement.name %>
+          Includes a <%= kit_requirement.required_product.name %> as <%= kit_requirement.name %>
         </p>
       <% end %>
     <% end %>

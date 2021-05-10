@@ -5,7 +5,6 @@
       <tr>
         <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:name) %></th>
         <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:required_product) %></th>
-        <th><%= SolidusConfigurableKits::Requirement.human_attribute_name(:quantity) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -14,7 +13,6 @@
       <tr id="<%= spree_dom_id kit_requirement %>">
         <td><%= kit_requirement.name %></td>
         <td><%= kit_requirement.required_product.name %></td>
-        <td><%= kit_requirement.quantity %></td>
         <td class="actions">
           <% if can?(:update, kit_requirement) %>
           <%= link_to_edit(kit_requirement, no_text: true) %>

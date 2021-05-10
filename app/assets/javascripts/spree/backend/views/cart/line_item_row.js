@@ -49,16 +49,14 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
     )
     // Add the requirements for this line item
     if (variant && variant.kit_requirements) {
-      variant.kit_requirements.map((kit_requirement) =>
-        Array.from({ length: kit_requirement.quantity }).map(() => {
-          return {
-            kit: this.model,
-            product_id: kit_requirement.required_product_id,
-            quantity: 1,
-            kitRequirementName: kit_requirement.name
-          }
-        })
-      ).flat().forEach((element) =>
+      variant.kit_requirements.map((kit_requirement) => (
+        {
+          kit: this.model,
+          product_id: kit_requirement.required_product_id,
+          quantity: 1,
+          kitRequirementName: kit_requirement.name
+        }
+      ).forEach((element) =>
         this.model.collection.push(element)
       )
     }
