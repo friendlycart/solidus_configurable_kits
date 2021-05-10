@@ -2,7 +2,9 @@
 // the installer will append this file to the app vendored assets here: vendor/assets/javascripts/spree/frontend/all.js'
 Spree.ready(function($) {
   Spree.updateKitPrice = function() {
-    var variantPrice = $("input[name='variant_id']:checked")[0].dataset.price;
+    var selectedVariant = $("input[name='variant_id']:checked")[0]
+    var hiddenVariantField = $("input[name='variant_id']")[0]
+    var variantPrice = (selectedVariant || hiddenVariantField).dataset.price
     var selectedKitItemPrices = Array.prototype.slice.call(
       $("select.kit_variant_input")
       ).map((element) => {
@@ -17,7 +19,7 @@ Spree.ready(function($) {
     var sum = [variantPrice].
       concat(selectedKitItemPrices).
       concat(unselectableKitItemPrices).
-      map((p) => p.replace(/[$,]+/g, "")).
+      map((p) => p.replace(/[€$,]+/g, "")).
       map(Number).
       filter((price) => !isNaN(price)).
       reduce((a, b) => a + b, 0)

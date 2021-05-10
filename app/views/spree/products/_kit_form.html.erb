@@ -7,7 +7,7 @@
         <ul>
           <% @product.variants_and_option_values_for(current_pricing_options).each_with_index do |variant, index| %>
             <li>
-              <%= radio_button_tag "variant_id", variant.id, index == 0, 'data-price' => variant.price_for_options(current_pricing_options)&.money %>
+              <%= radio_button_tag "variant_id", variant.id, index == 0, 'data-price' => variant.resilient_money_price(current_pricing_options) %>
               <%= label_tag "variant_id_#{ variant.id }" do %>
                 <span class="variant-description">
                   <%= variant_options variant %>
@@ -25,7 +25,7 @@
         </ul>
       </div>
     <% else %>
-      <%= hidden_field_tag "variant_id", @product.master.id %>
+      <%= hidden_field_tag "variant_id", @product.master.id, 'data-price' => @product.resilient_money_price(current_pricing_options) %>
     <% end %>
 
     <% @product.kit_requirements.each do |kit_requirement| %>
