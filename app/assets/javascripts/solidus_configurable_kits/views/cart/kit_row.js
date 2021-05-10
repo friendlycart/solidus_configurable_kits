@@ -15,16 +15,19 @@ SolidusConfigurableKits.Views.Cart.KitRow = Backbone.View.extend({
     var view = this;
     this.listenTo(this.model, "change", this.render);
     this.options = []
+    var productId = view.model.get("product_id") || view.model.get("variant").product_id
     Spree.ajax({
       type: 'GET',
-      url: Spree.pathFor('api/products/' + view.model.get("productId")),
+      url: Spree.pathFor('api/products/' + productId),
       success: function(data) {
         if (data.variants.length) {
           view.options = data.variants.filter((v) => v.kit_price)
         } else {
           view.options = [data.master]
         }
-        view.model.set("variant", view.options[0])
+        if (!view.model.get("variant")) {
+          view.model.set("variant", view.options[0])
+        }
         view.render()
       },
       error: function(msg) {

@@ -53,7 +53,7 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
         Array.from({ length: kit_requirement.quantity }).map(() => {
           return {
             kit: this.model,
-            productId: kit_requirement.required_product_id,
+            product_id: kit_requirement.required_product_id,
             quantity: 1,
             kitRequirementName: kit_requirement.name
           }
@@ -65,7 +65,13 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
   },
 
   kitItems: function() {
-    return this.model.collection.models.filter((el) => el.attributes.kit === this.model)
+    return this.model.collection.models.filter((el) => {
+      if (this.model.isNew()) {
+        return el.model.get("kit") === this.model
+      } else {
+        return el.get("kit")?.id == this.model.get("id")
+      }
+    })
   },
 
   validate: function () {
