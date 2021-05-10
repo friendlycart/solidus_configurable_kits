@@ -45,7 +45,7 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
 
     // Remove any requirements from a previous kit line item
     this.model.collection.remove(
-      this.model.collection.models.filter((el) => el.attributes.kit === this.model)
+      this.kitItems()
     )
     // Add the requirements for this line item
     if (variant && variant.kit_requirements) {
@@ -64,6 +64,10 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
     }
   },
 
+  kitItems: function() {
+    return this.model.collection.models.filter((el) => el.attributes.kit === this.model)
+  },
+
   validate: function () {
     this.$('[name=quantity]').toggleClass('error', !this.$('[name=quantity]').val());
     this.$('.select2-container').toggleClass('error', !this.$('[name=variant_id]').val());
@@ -78,7 +82,8 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
     }
     var attrs = {
       quantity: parseInt(this.$('input.line_item_quantity').val()),
-      variant_id: this.model.get('variant').id
+      variant_id: this.model.get('variant').id,
+      kit_variant_ids: this.kitItems().map((i) => i.get("variant").id)
     }
 
     var model = this.model;
