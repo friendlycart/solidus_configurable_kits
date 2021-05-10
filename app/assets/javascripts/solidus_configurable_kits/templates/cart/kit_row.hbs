@@ -1,30 +1,42 @@
-<td class="line-item-select-kit-item fullwidth" colspan="2">
-  <label class="fullwidth">
-    {{ line_item.kit_requirement.name }}
-    <select
-      id="kit-item-select"
-      class="js-kit-item-select fullwidth"
-      name="variant_id"
-    >
-      {{#each options}}
-        <option
-          value="{{this.id}}"
-          {{#if this.selected}}
-            selected="selected"
-          {{/if}}
-        >
-          {{#if this.options_text}}
-            {{ this.options_text }}
-          {{else}}
-            {{this.name}}
-          {{/if}}
-          (+ {{ this.kit_price }})
-          </option>
-      {{/each}}
-    </select>
-  </label>
-
-</td>
+{{#if showSelect}}
+  <td class="line-item-select-kit-item fullwidth" colspan="2">
+    <label class="fullwidth">
+      {{ line_item.kit_requirement.name }}
+      <select
+        id="kit-item-select"
+        class="js-kit-item-select fullwidth"
+        name="variant_id"
+      >
+        {{#each options}}
+          <option
+            value="{{this.id}}"
+            {{#if this.selected}}
+              selected="selected"
+            {{/if}}
+          >
+            {{#if this.options_text}}
+              {{ this.options_text }}
+            {{else}}
+              {{this.name}}
+            {{/if}}
+            (+ {{ this.kit_price }})
+            </option>
+        {{/each}}
+      </select>
+    </label>
+  </td>
+{{else}}
+  <td class="line-item-image">
+    {{> _image image=line_item.variant.images.[0] size="mini" }}
+  </td>
+  <td class="line-item-name">
+    {{ line_item.variant.name }}<br>
+    {{#if line_item.variant.options_text }}
+      {{ line_item.variant.options_text }}<br/>
+    {{/if}}
+    <strong>{{ t "sku" }}:</strong> {{ line_item.variant.sku }}
+  </td>
+{{/if}}
 <td class="line-item-price">
   <br>{{ line_item.variant.kit_price }}
 </td>
@@ -35,4 +47,12 @@
   <br>{{ line_item.display_amount }}
 </td>
 <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
+  {{#if showButtons }}
+    {{#if editing}}
+      <button class="save-line-item fa fa-ok no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
+      <button class="cancel-line-item fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
+    {{else}}
+      <button class="edit-line-item fa fa-edit no-text with-tip" data-action="edit" title="{{ t "actions.edit" }}"></button>
+    {{/if}}
+  {{/if}}
 </td>

@@ -20,6 +20,18 @@ module SolidusConfigurableKits
           end
         end
 
+        def update
+          @line_item = @order.line_items.find(params[:id])
+          if @line_item.update(line_item_params)
+            @order.line_items.reload
+            @order.ensure_updated_shipments
+            @order.recalculate
+            respond_with(@line_item, default_template: :show)
+          else
+            invalid_resource!(@line_item)
+          end
+        end
+
         ::Spree::Api::LineItemsController.prepend self
       end
     end

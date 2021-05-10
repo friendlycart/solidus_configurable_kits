@@ -41,6 +41,10 @@ SolidusConfigurableKits.Views.Cart.KitRow = Backbone.View.extend({
   },
 
   events: {
+    'click .edit-line-item': 'onEdit',
+    'click .cancel-line-item': 'onCancel',
+    'click .save-line-item': 'onSave',
+
     'change .js-kit-item-select': 'onSelectVariant',
   },
 
@@ -52,8 +56,37 @@ SolidusConfigurableKits.Views.Cart.KitRow = Backbone.View.extend({
     this.render()
   },
 
+  onEdit: function(e) {
+    e.preventDefault()
+    this.editing = true
+    this.render()
+  },
+
+  onCancel: function(e) {
+    e.preventDefault()
+    this.editing = false
+    this.render()
+  },
+
+  onSave: function(e) {
+    e.preventDefault()
+
+    var attrs = {
+      variant_id: this.model.get('variant').id,
+    }
+
+    var model = this.model;
+    this.model.save(attrs, {
+      patch: true,
+      success: function() {
+        model.order.advance()
+      }
+    });
+    this.editing = false;
+    this.render();
+  },
+
   render: function () {
-    console.log(this.model.get("variant"))
     var optionsWithSelectedVariant = this.options.map((variant) => {
 
       variant.selected = variant.id === this.model.get("variant")?.id
@@ -61,7 +94,9 @@ SolidusConfigurableKits.Views.Cart.KitRow = Backbone.View.extend({
     })
     var html = HandlebarsTemplates['cart/kit_row']({
       line_item: this.model.toJSON(),
-      isNew: this.model.isNew(),
+      editing: this.editing,
+      showSelect: this.model.isNew() || this.editing,
+      showButtons: !this.model.isNew(),
       options: optionsWithSelectedVariant
     });
     this.$el.html(html);

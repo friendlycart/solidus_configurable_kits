@@ -18,6 +18,7 @@ module SolidusConfigurableKits
           class_name: "::SolidusConfigurableKits::Requirement",
           foreign_key: :requirement_id,
           optional: true
+        base.before_validation :update_prices_after_variant_change
         base.before_validation :update_kit_item_quantities
         base.before_validation :create_kit_items
         base.money_methods :kit_total
@@ -37,13 +38,13 @@ module SolidusConfigurableKits
         variant&.product&.kit_requirements&.any? || false
       end
 
-      def assign_attributes(*)
-        return if kit_item?
-
-        super
-      end
-
       private
+
+      def update_prices_after_variant_change
+        return unless variant_id_changed?
+        self.price = nil
+        set_pricing_attributes
+      end
 
       def create_kit_items
         return unless new_record?
