@@ -49,7 +49,7 @@ module SolidusConfigurableKits
       def create_kit_items
         return unless new_record?
         return unless kit?
-        return unless kit_variant_ids?.present?
+        return unless kit_variant_ids.present?
 
         kit_variant_ids.each do |requirement_id, kit_variant_id|
           kit_items.new(
