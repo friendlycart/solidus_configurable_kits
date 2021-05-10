@@ -42,7 +42,6 @@ SolidusConfigurableKits.Views.Cart.KitRow = Backbone.View.extend({
   },
 
   onSelectVariant: function(event) {
-    console.log(event, this.options)
     var selectedVariant = this.options.find((variant) => {
       return variant.id === parseInt(event.target.value)
     })
