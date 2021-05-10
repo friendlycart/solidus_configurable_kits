@@ -18,7 +18,7 @@ module SolidusConfigurableKits
         base.before_validation :create_kit_items
         base.money_methods :kit_total
         base.validate :all_required_kit_items_present
-        base.attr_accessor :kit_variant_ids
+        base.attribute :kit_variant_ids, default: []
       end
 
       def kit_item?
@@ -44,9 +44,10 @@ module SolidusConfigurableKits
       def create_kit_items
         return unless new_record?
         return unless kit?
+        return unless kit_variant_ids?.present?
 
         kit_variant_quantities = kit_variant_ids.uniq.map do |id|
-          [id, kit_variants.select { |kv_id| kv_id == id }.length]
+          [id, kit_variant_ids.select { |kv_id| kv_id == id }.length]
         end.to_h
 
         kit_variant_quantities.each do |kit_variant_id, kit_quantity|
