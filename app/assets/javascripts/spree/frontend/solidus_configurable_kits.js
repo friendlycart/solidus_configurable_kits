@@ -19,6 +19,7 @@ Spree.ready(function($) {
     var sum = [variantPrice].
       concat(selectedKitItemPrices).
       concat(unselectableKitItemPrices).
+      filter((price) => price).
       map((p) => p.replace(/[€$,]+/g, "")).
       map(Number).
       filter((price) => !isNaN(price)).
@@ -36,4 +37,5 @@ Spree.ready(function($) {
   $("select.kit_variant_input, input[name='variant_id'").change(function(event) {
     Spree.updateKitPrice();
   });
+  Spree.updateKitPrice();
 });
