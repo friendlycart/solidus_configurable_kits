@@ -4,6 +4,9 @@ Spree.ready(function($) {
   Spree.updateKitPrice = function() {
     var selectedVariant = $("input[name='variant_id']:checked")[0]
     var hiddenVariantField = $("input[name='variant_id']")[0]
+
+    if (!(selectedVariant || hiddenVariantField)) { return }
+
     var variantPrice = (selectedVariant || hiddenVariantField).dataset.price
     var selectedKitItemPrices = Array.prototype.slice.call(
       $("select.kit_variant_input")
