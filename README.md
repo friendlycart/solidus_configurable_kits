@@ -84,4 +84,5 @@ Please refer to the dedicated [page](https://github.com/solidusio/solidus/wiki/H
 
 ## License
 
-Copyright (c) 2021 [Martin Meyerhoff], released under the New BSD License.
+Copyright (c) 2021 [Martin Meyerhoff], released under the GNU General Public License v3.
+I reserve the right to release this software under different terms to individual clients. Contact me for details.

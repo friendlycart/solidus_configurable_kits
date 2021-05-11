@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Configurable Kits for Solidus. A kit is a product comprised of other products.'
   spec.homepage = 'https://github.com/friendlycart/solidus_configurable_kits'
-  spec.license = 'BSD-3-Clause'
+  spec.license = 'GNU General Public License v3'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/friendlycart/solidus_configurable_kits'
