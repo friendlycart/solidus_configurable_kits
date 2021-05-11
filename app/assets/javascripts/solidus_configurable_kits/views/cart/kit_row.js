@@ -100,5 +100,6 @@ SolidusConfigurableKits.Views.Cart.KitRow = Backbone.View.extend({
       options: optionsWithSelectedVariant
     });
     this.$el.html(html);
+    this.$("[name=variant_id]").select2();
   }
 });
