@@ -24,6 +24,8 @@ module SolidusConfigurableKits
       else
         begin
           @line_item = @order.contents.add(variant, quantity, options)
+          @order.line_items.reload
+          @order.recalculate
         rescue ActiveRecord::RecordInvalid => e
           @order.errors.add(:base, e.record.errors.full_messages.join(", "))
         end
