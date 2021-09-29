@@ -31,7 +31,8 @@ module SolidusConfigurableKits
       end
 
       def kit_title(pricing_options)
-        "#{options_text} (+ #{resilient_money_price(pricing_options)})"
+        title = is_master? ? product.name : options_text
+        "#{title} (+ #{resilient_money_price(pricing_options)})"
       end
 
       def resilient_money_price(pricing_options)

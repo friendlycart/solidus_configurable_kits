@@ -32,7 +32,7 @@
       <h2> <%= kit_requirement.name %> </h2>
 
       <% required_product = kit_requirement.required_product %>
-      <% if required_product.variants.any? %>
+      <% if required_product.variants.any? || kit_requirement.optional? %>
         <% if kit_requirement.description.present? %>
           <p> <%= kit_requirement.description %> </p>
         <% end %>
@@ -40,7 +40,7 @@
             Please choose a <%= kit_requirement.name %> <br>
             <%= select_tag "kit_variant_ids[#{kit_requirement.id}]",
                           options_for_select(
-                            kit_requirement.required_product.variants_and_option_values_for(current_kit_pricing_options).map do |variant|
+                            kit_requirement.required_product.kit_item_variants_for(current_kit_pricing_options).map do |variant|
                               [
                                 variant.kit_title(current_kit_pricing_options),
                                 variant.id,
@@ -48,8 +48,8 @@
                               ]
                             end
                           ),
-                          required: true,
-                          include_blank: true,
+                          required: !kit_requirement.optional?,
+                          include_blank: kit_requirement.optional? ? "No #{kit_requirement.name}" : false,
                           class: "kit_variant_input" %>
           <% end %>
       <% else %>
