@@ -6,6 +6,7 @@ RSpec.describe SolidusConfigurableKits::Requirement do
   it { is_expected.to belong_to :product }
   it { is_expected.to belong_to :required_product }
   it { is_expected.to respond_to :description }
+  it { is_expected.to respond_to :optional }
 
   describe "validations" do
     subject(:requirement) { build(:kit_requirement, required_product: required_product) }
