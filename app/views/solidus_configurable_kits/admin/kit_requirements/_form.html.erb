@@ -18,4 +18,14 @@
   <%= form.text_area :description, class: "fullwidth" %>
 <% end %>
 
+<%= form.field_container :optional do %>
+  <div class="checkbox">
+    <label>
+      <%= form.check_box :optional %>
+      <%= SolidusConfigurableKits::Requirement.human_attribute_name(:optional) %>
+    </label>
+    <%= form.field_hint :optional %>
+  </div>
+<% end %>
+
 <div class="clear"></div>

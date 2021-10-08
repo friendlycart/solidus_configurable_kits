@@ -16,6 +16,15 @@ module SolidusConfigurableKits
         }
       end
 
+      # @param pricing_options [Spree::Variant::PricingOptions] the pricing options to search
+      #   for, default: the default pricing options
+      # @return [Array<Spree::Variant>] all variants that can be part of a kit
+      def kit_item_variants_for(pricing_options = Spree::Config.default_pricing_options)
+        variants_including_master.includes(:option_values).with_prices(pricing_options).select do |variant|
+          variant.option_values.any? || (variant.is_master? && variants.none? )
+        end
+      end
+
       ::Spree::Product.prepend self
     end
   end

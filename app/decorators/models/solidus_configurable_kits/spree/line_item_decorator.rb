@@ -52,6 +52,8 @@ module SolidusConfigurableKits
         return unless kit_variant_ids.present?
 
         kit_variant_ids.each do |requirement_id, kit_variant_id|
+          next unless kit_variant_id.present?
+
           kit_items.new(
             requirement_id: requirement_id,
             variant_id: kit_variant_id,
@@ -72,21 +74,26 @@ module SolidusConfigurableKits
 
       def all_required_kit_items_present
         return true unless kit?
-        return true if quantity.zero? || required_kit_items_fulfilled?
+        return true if quantity.zero?
+        return true if required_kit_items_fulfilled? && only_allowed_products_in_kit?
 
         errors.add(:kit_items, :do_not_fulfill_product_kit_requirements)
       end
 
       def required_kit_items_fulfilled?
-        required_product_ids == kit_item_product_ids
+        (required_product_ids - kit_item_product_ids).empty?
+      end
+
+      def only_allowed_products_in_kit?
+        (kit_item_product_ids - product.kit_requirements.map(&:required_product_id)).empty?
       end
 
       def required_product_ids
-        Set.new(product.kit_requirements.map(&:required_product_id))
+        product.kit_requirements.reject(&:optional).map(&:required_product_id).sort
       end
 
       def kit_item_product_ids
-        Set.new(kit_items.map(&:variant).map(&:product_id))
+        kit_items.map(&:variant).map(&:product_id).sort
       end
 
       ::Spree::LineItem.prepend self
