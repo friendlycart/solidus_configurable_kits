@@ -10,7 +10,7 @@ module SolidusConfigurableKits
           [
             { option_values: :option_type },
             { product: :kit_requirements },
-            :default_price,
+#             :default_price,
             :images,
             { stock_items: :stock_location },
           ]
