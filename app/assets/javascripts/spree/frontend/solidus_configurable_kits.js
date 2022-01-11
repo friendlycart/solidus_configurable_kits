@@ -4,6 +4,7 @@ Spree.ready(function($) {
   Spree.updateKitPrice = function() {
     var selectedVariant = $("input[name='variant_id']:checked")[0]
     var hiddenVariantField = $("input[name='variant_id']")[0]
+    var priceCurrency = $("[itemprop='priceCurrency']");
 
     if (!(selectedVariant || hiddenVariantField)) { return }
 
@@ -30,7 +31,7 @@ Spree.ready(function($) {
     if (variantPrice) {
       var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'EUR',
+        currency: priceCurrency.attr('content'),
       });
 
       $(".price.selling").text(formatter.format(sum));
