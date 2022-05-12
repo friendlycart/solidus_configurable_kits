@@ -14,7 +14,7 @@ module SolidusConfigurableKits
             :images,
             { stock_items: :stock_location },
           ]
-          list.push(:default_price) if Spree.solidus_gem_version <= Gem::Version.new('3')
+          list.push(:default_price) if Spree.solidus_gem_version < Gem::Version.new('3')
           list
         end
 
