@@ -35,3 +35,5 @@ send(:eval_gemfile, 'Gemfile-local') if File.exist? 'Gemfile-local'
 group :test do
   gem 'shoulda-matchers', '~> 4.0'
 end
+
+gem "solidus_frontend", "~> 3.3.alpha", :github => "solidusio/solidus_frontend"
