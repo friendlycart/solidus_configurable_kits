@@ -10,7 +10,7 @@ module SolidusConfigurableKits
         result += [grouped_by_kit[nil].detect{ |i| i.line_item = kit_line_item }]
         result += grouped_by_kit[kit_line_item]
       end
-      result += grouped_by_kit[nil].reject { |manifest_item| manifest_item.line_item.kit? }
+      result += grouped_by_kit[nil]&.reject { |manifest_item| manifest_item.line_item.kit? } || []
     end
   end
 end
