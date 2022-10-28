@@ -37,8 +37,8 @@ RSpec.describe Spree::LineItem do
     let(:order) { create(:order) }
 
     before do
-      create(:price, variant: kit_item, kit_item: true, currency: "USD")
-      create(:price, variant: optional_kit_item, kit_item: true, currency: "USD")
+      kit_item.prices << create(:price, variant: kit_item, kit_item: true, currency: "USD")
+      optional_kit_item.prices << create(:price, variant: optional_kit_item, kit_item: true, currency: "USD")
       create(:kit_requirement, product: kit_product, required_product: kit_item.product)
       create(:kit_requirement, product: kit_product, required_product: optional_kit_item.product, optional: true)
     end
