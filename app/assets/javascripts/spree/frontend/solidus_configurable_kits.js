@@ -34,7 +34,7 @@ Spree.ready(function($) {
         currency: priceCurrency.attr('content'),
       });
 
-      $(".price.selling").text(formatter.format(sum));
+      $("#product-price .price.selling").text(formatter.format(sum));
     }
   };
 
