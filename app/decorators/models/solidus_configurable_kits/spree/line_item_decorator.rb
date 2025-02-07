@@ -18,12 +18,13 @@ module SolidusConfigurableKits
           class_name: "::SolidusConfigurableKits::Requirement",
           foreign_key: :requirement_id,
           optional: true
+
         base.before_validation :update_prices_after_variant_change
         base.before_validation :update_kit_item_quantities
         base.before_validation :create_kit_items
         base.money_methods :kit_total
         base.validate :all_required_kit_items_present
-        base.attribute :kit_variant_ids, default: []
+        base.attribute :kit_variant_ids, default: {}
       end
 
       def kit_item?
