@@ -15,6 +15,13 @@ module SolidusConfigurableKits
       ::Spree::PermittedAttributes.line_item_attributes << { kit_variant_ids: {} }
     end
 
+    initializer 'solidus_configurable_kits.set_default_classes' do
+      Spree.config do |config|
+        config.variant_price_selector_class = "SolidusConfigurableKits::PriceSelector"
+        config.order_merger_class = "SolidusConfigurableKits::OrderMerger"
+      end
+    end
+
     class << self
       def activate
         ActionView::Base.include SolidusConfigurableKits::KitPricingHelper
