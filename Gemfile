@@ -34,4 +34,4 @@ group :test do
 end
 
 gem "concurrent-ruby", "< 1.3.5"
-gem "solidus_frontend",  github: "solidusio/solidus_frontend", branch: "v3.2"
+gem "solidus_frontend", github: "solidusio/solidus_frontend", branch: "v3.2"

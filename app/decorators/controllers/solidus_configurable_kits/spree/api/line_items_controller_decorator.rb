@@ -4,7 +4,6 @@ module SolidusConfigurableKits
   module Spree
     module Api
       module LineItemsControllerDecorator
-
         def create
           variant = ::Spree::Variant.find(params[:line_item][:variant_id])
           @line_item = @order.contents.add(

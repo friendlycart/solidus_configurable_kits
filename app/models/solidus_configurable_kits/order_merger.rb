@@ -34,13 +34,13 @@ module SolidusConfigurableKits
       end
 
       set_user(user)
-      if order.valid?
-        persist_merge
+      return unless order.valid?
 
-        # So that the destroy doesn't take out line items which may have been re-assigned
-        other_order.line_items.reload
-        other_order.destroy
-      end
+      persist_merge
+
+      # So that the destroy doesn't take out line items which may have been re-assigned
+      other_order.line_items.reload
+      other_order.destroy
     end
 
     # Merge the `other_order_line_item` into `current_line_item`

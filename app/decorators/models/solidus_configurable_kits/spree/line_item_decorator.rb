@@ -51,7 +51,7 @@ module SolidusConfigurableKits
 
       def kit_variant_ids=(hash)
         hash.each do |requirement_id, kit_variant_id|
-          next unless kit_variant_id.present?
+          next if kit_variant_id.blank?
 
           kit_items.new(
             requirement_id: requirement_id,
@@ -67,6 +67,7 @@ module SolidusConfigurableKits
       def update_prices_after_variant_change
         return unless variant_id_changed?
         return unless variant
+
         self.price = nil
         set_pricing_attributes
       end

@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe SolidusConfigurableKits::PriceSelector do
-  let(:variant) { build_stubbed(:variant) }
-
   subject { described_class.new(variant) }
+
+  let(:variant) { build_stubbed(:variant) }
 
   it { is_expected.to respond_to(:variant) }
   it { is_expected.to respond_to(:price_for) }
@@ -105,7 +105,6 @@ RSpec.describe SolidusConfigurableKits::PriceSelector do
         end
       end
     end
-
 
     context "with a kit item price but normal price requested" do
       let(:normal_price) { create(:price, amount: 12, kit_item: false) }

@@ -74,7 +74,7 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "the old order is empty, the new order has a kit" do
       before do
-        order_1.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
+        order_1.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
       end
 
       it "does not lose the kit" do
@@ -87,7 +87,7 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "the old order has a kit, the new order is empty" do
       before do
-        order_2.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
+        order_2.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
       end
 
       it "does not lose the kit" do
@@ -101,18 +101,17 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "both orders have a kit with different kit items" do
       before do
-        order_1.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
-        order_2.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_2.id.to_s})
+        order_1.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
+        order_2.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_2.id.to_s })
       end
-
 
       it "keeps both kits" do
         expect(order_1.reload.line_items.length).to eq(2)
         expect(order_2.reload.line_items.length).to eq(2)
         subject.merge!(order_2, user)
         expect(order_2).to be_destroyed
-        expect(order_1.reload.line_items.select(&:kit?).length).to eq(2)
-        expect(order_1.line_items.select(&:kit_item?).length).to eq(2)
+        expect(order_1.reload.line_items.count(&:kit?)).to eq(2)
+        expect(order_1.line_items.count(&:kit_item?)).to eq(2)
         expect(order_1.line_items.length).to eq(4)
         expect(order_1.line_items.all?(&:valid?)).to be true
       end
@@ -120,10 +119,9 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "both orders have identical kits" do
       before do
-        order_1.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
-        order_2.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
+        order_1.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
+        order_2.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
       end
-
 
       it "keeps both kits" do
         expect(order_1.reload.line_items.length).to eq(2)
@@ -132,8 +130,8 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
         expect(order_2).to be_destroyed
         expect(order_1.reload.line_items.detect(&:kit?).quantity).to eq(2)
         expect(order_1.line_items.detect(&:kit_item?).quantity).to eq(2)
-        expect(order_1.reload.line_items.select(&:kit?).length).to eq(1)
-        expect(order_1.line_items.select(&:kit_item?).length).to eq(1)
+        expect(order_1.reload.line_items.count(&:kit?)).to eq(1)
+        expect(order_1.line_items.count(&:kit_item?)).to eq(1)
         expect(order_1.line_items.length).to eq(2)
         expect(order_1.line_items.all?(&:valid?)).to be true
       end
@@ -237,7 +235,7 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
       order_2.contents.add(create(:variant), 1)
     end
 
-    it "should create errors with invalid line items" do
+    it "creates errors with invalid line items" do
       order_2.line_items.first.variant.destroy
       order_2.line_items.reload # so that it registers as invalid
       subject.merge!(order_2)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 json.cache! [I18n.locale, current_pricing_options, variant] do
-  json.(variant, *variant_attributes)
+  json.call(variant, *variant_attributes)
   json.price(variant.resilient_money_price(current_pricing_options)&.to_s)
   json.display_price(variant.resilient_money_price(current_pricing_options)&.to_s)
   json.kit_price(variant.resilient_money_price(current_kit_pricing_options)&.to_s)
@@ -14,7 +14,7 @@ json.cache! [I18n.locale, current_pricing_options, variant] do
 
   json.is_destroyed(variant.destroyed?)
   json.option_values(variant.option_values) do |option_value|
-    json.(option_value, *option_value_attributes)
+    json.call(option_value, *option_value_attributes)
   end
   json.images(variant.gallery.images) do |image|
     json.partial!("spree/api/images/image", image: image)
