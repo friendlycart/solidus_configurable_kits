@@ -19,6 +19,8 @@ bin/rails generate solidus_configurable_kits:install
 
 First, make sure that your `Spree::Config.variant_price_selector_class` is either the `SolidusConfigurableKits::PriceSelector` or a class that inherits from it / offers the same functionality.
 
+Also, make sure that your `Spree:Config.order_merger_class` is either the `SolidusConfigurableKits::OrderMerger` or a class that inherits from it/ offers the same functionality.
+
 You can then mark some variants as eligible to be included in kits by adding a "Kit Price" to them. The Kit price will be added to the price of the base kit variant, and will in many cases by `0`.
 
 Afterwards, create your Kit product, and add some kit requirements on the "Kits" tab. On the product display page and in the admin cart, you will now be prompted for the variants that have kit prices before being able to add that product to the cart, and the cart will include some line items that result from fulfilling the kit requirements.
