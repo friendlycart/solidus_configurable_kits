@@ -63,6 +63,40 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
     end
   end
 
+  context "merging orders with configurable kits" do
+    let(:kit_product) { create(:product) }
+    let(:kit_item) { create(:variant) }
+    let!(:kit_price) { create(:price, variant: kit_item, kit_item: true, currency: "USD") }
+    let!(:kit_requirement) { create(:kit_requirement, product: kit_product, required_product: kit_item.product) }
+
+    context "the old order is empty, the new order has a kit" do
+      before do
+        order_1.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item.id.to_s})
+      end
+
+      it "does not lose the kit" do
+        subject.merge!(order_2, user)
+        expect(order_2).to be_destroyed
+        expect(order_1.line_items.count).to eq(2)
+        expect(order_1.line_items.all?(&:valid?)).to be true
+      end
+    end
+
+    context "the old order has a kit, the new order is empty" do
+      before do
+        order_2.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item.id.to_s})
+      end
+
+      it "does not lose the kit" do
+        expect(order_1.line_items.length).to eq(0)
+        subject.merge!(order_2, user)
+        expect(order_2).to be_destroyed
+        expect(order_1.line_items.length).to eq(2)
+        expect(order_1.line_items.all?(&:valid?)).to be true
+      end
+    end
+  end
+
   context "merging using extension-specific line_item_comparison_hooks" do
     before do
       Spree::Order.register_line_item_comparison_hook(:foos_match)

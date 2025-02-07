@@ -27,7 +27,7 @@ module SolidusConfigurableKits
     # @return [void]
     def merge!(other_order, user = nil)
       if other_order.currency == order.currency
-        other_order.line_items.each do |other_order_line_item|
+        other_order.line_items.reject(&:kit_item?).each do |other_order_line_item|
           current_line_item = find_matching_line_item(other_order_line_item)
           handle_merge(current_line_item, other_order_line_item)
         end
