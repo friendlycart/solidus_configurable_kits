@@ -42,6 +42,7 @@ module SolidusConfigurableKits
 
       def update_prices_after_variant_change
         return unless variant_id_changed?
+        return unless variant
         self.price = nil
         set_pricing_attributes
       end
