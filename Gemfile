@@ -11,9 +11,6 @@ gem 'solidus', github: 'solidusio/solidus', branch: branch
 # See https://github.com/bundler/bundler/issues/6677
 gem 'rails', ENV.fetch('RAILS_VERSION', '>0.a')
 
-# Provides basic authentication functionality for testing parts of your engine
-gem 'solidus_auth_devise'
-
 case ENV['DB']
 when 'mysql'
   gem 'mysql2'
