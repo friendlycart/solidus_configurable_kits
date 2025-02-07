@@ -1,0 +1,2 @@
+replace_contents "#line_items"
+partial "solidus_configurable_kits/shared/line_item_override"

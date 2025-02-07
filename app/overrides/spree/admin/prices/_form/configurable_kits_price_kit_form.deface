@@ -1,0 +1,2 @@
+insert_bottom "[data-hook='admin_product_price_form']"
+partial "solidus_configurable_kits/admin/shared/prices_form_addition"

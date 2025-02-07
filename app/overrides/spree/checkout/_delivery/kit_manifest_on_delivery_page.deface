@@ -1,0 +1,2 @@
+replace_contents ".shipment .stock-contents .item-price"
+partial "solidus_configurable_kits/shared/kit_manifest_item_price"

@@ -1,0 +1,2 @@
+insert_before "[data-hook='master_prices_header'] .actions"
+partial "solidus_configurable_kits/admin/shared/prices_table_header_addition"

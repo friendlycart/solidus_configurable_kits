@@ -1,0 +1,2 @@
+insert_before "[data-hook='prices_row'] .actions"
+partial "solidus_configurable_kits/admin/shared/prices_table_row_addition"
