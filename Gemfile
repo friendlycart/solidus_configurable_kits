@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
+branch = ENV.fetch('SOLIDUS_BRANCH', 'v3.2')
 gem 'solidus', github: 'solidusio/solidus', branch: branch
 
 # Needed to help Bundler figure out how to resolve dependencies,
@@ -20,7 +20,7 @@ when 'mysql'
 when 'postgresql'
   gem 'pg'
 else
-  gem 'sqlite3'
+  gem 'sqlite3', "~> 1.7"
 end
 
 gemspec
@@ -36,4 +36,5 @@ group :test do
   gem 'shoulda-matchers', '~> 4.0'
 end
 
-gem "solidus_frontend", "~> 3.3.alpha", :github => "solidusio/solidus_frontend"
+gem "concurrent-ruby", "< 1.3.5"
+gem "solidus_frontend",  github: "solidusio/solidus_frontend", branch: "v3.2"
