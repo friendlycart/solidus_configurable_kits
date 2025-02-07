@@ -42,5 +42,33 @@ module SolidusConfigurableKits
         other_order.destroy
       end
     end
+
+    # Merge the `other_order_line_item` into `current_line_item`
+    #
+    # If `current_line_item` is nil, the `other_order_line_item` will be
+    # re-assigned to the `order`.
+    #
+    # If the merged line item can not be saved, an error will be added to
+    # `order`.
+    #
+    # @api privat
+    # @param [Spree::LineItem] current_line_item The line item to be merged
+    # into. If nil, the `other_order_line_item` will be re-assigned.
+    # @param [Spree::LineItem] other_order_line_item The line item to merge in.
+    # @return [void]
+    def handle_merge(current_line_item, other_order_line_item)
+      if current_line_item
+        current_line_item.quantity += other_order_line_item.quantity
+        handle_error(current_line_item) unless current_line_item.save
+      else
+        new_line_item = order.line_items.build(other_order_line_item.attributes.except("id"))
+        other_order_line_item.kit_items.each do |kit_item|
+          new_line_item.kit_items.build(
+            kit_item.attributes.except("id").merge(order: order)
+          )
+        end
+        handle_error(new_line_item) unless new_line_item.save
+      end
+    end
   end
 end

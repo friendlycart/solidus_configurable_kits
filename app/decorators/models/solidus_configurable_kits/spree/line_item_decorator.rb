@@ -21,14 +21,12 @@ module SolidusConfigurableKits
 
         base.before_validation :update_prices_after_variant_change
         base.before_validation :update_kit_item_quantities
-        base.before_validation :create_kit_items
         base.money_methods :kit_total
         base.validate :all_required_kit_items_present
-        base.attribute :kit_variant_ids, default: {}
       end
 
       def kit_item?
-        kit.present?
+        kit_requirement.present?
       end
 
       def kit_total
@@ -39,21 +37,20 @@ module SolidusConfigurableKits
         variant&.product&.kit_requirements&.any? || false
       end
 
-      private
-
-      def update_prices_after_variant_change
-        return unless variant_id_changed?
-        return unless variant
-        self.price = nil
-        set_pricing_attributes
+      def serializable_hash
+        super.tap do |hash|
+          hash["kit_variant_ids"] = kit_variant_ids
+        end
       end
 
-      def create_kit_items
-        return unless new_record?
-        return unless kit?
-        return unless kit_variant_ids.present?
+      def kit_variant_ids
+        kit_items.map do |kit_item|
+          [kit_item.kit_requirement.id.to_s, kit_item.variant_id.to_s]
+        end.to_h
+      end
 
-        kit_variant_ids.each do |requirement_id, kit_variant_id|
+      def kit_variant_ids=(hash)
+        hash.each do |requirement_id, kit_variant_id|
           next unless kit_variant_id.present?
 
           kit_items.new(
@@ -63,6 +60,15 @@ module SolidusConfigurableKits
             order: order
           )
         end
+      end
+
+      private
+
+      def update_prices_after_variant_change
+        return unless variant_id_changed?
+        return unless variant
+        self.price = nil
+        set_pricing_attributes
       end
 
       def update_kit_item_quantities

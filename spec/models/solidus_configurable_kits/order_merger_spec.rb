@@ -66,8 +66,8 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
   context "merging orders with configurable kits" do
     let(:kit_product) { create(:product) }
     let!(:kit_item_product) { create(:product, variants: [kit_item_1, kit_item_2]) }
-    let(:kit_item_1) { create(:variant, prices: [kit_item_1_price]) }
-    let(:kit_item_2) { create(:variant, prices: [kit_item_2_price]) }
+    let(:kit_item_1) { build(:variant, prices: [kit_item_1_price]) }
+    let(:kit_item_2) { build(:variant, prices: [kit_item_2_price]) }
     let(:kit_item_1_price) { create(:price, kit_item: true, currency: "USD") }
     let(:kit_item_2_price) { create(:price, kit_item: true, currency: "USD") }
     let!(:kit_requirement) { create(:kit_requirement, product: kit_product, required_product: kit_item_product) }
@@ -107,10 +107,12 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
 
       it "keeps both kits" do
-        expect(order_1.line_items.length).to eq(2)
+        expect(order_1.reload.line_items.length).to eq(2)
+        expect(order_2.reload.line_items.length).to eq(2)
         subject.merge!(order_2, user)
         expect(order_2).to be_destroyed
-
+        expect(order_1.reload.line_items.select(&:kit?).length).to eq(2)
+        expect(order_1.line_items.select(&:kit_item?).length).to eq(2)
         expect(order_1.line_items.length).to eq(4)
         expect(order_1.line_items.all?(&:valid?)).to be true
       end
@@ -124,10 +126,14 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
 
       it "keeps both kits" do
-        expect(order_1.line_items.length).to eq(2)
+        expect(order_1.reload.line_items.length).to eq(2)
+        expect(order_2.reload.line_items.length).to eq(2)
         subject.merge!(order_2, user)
         expect(order_2).to be_destroyed
-        expect(order_1.line_items.detect(&:kit?).quantity).to eq(2)
+        expect(order_1.reload.line_items.detect(&:kit?).quantity).to eq(2)
+        expect(order_1.line_items.detect(&:kit_item?).quantity).to eq(2)
+        expect(order_1.reload.line_items.select(&:kit?).length).to eq(1)
+        expect(order_1.line_items.select(&:kit_item?).length).to eq(1)
         expect(order_1.line_items.length).to eq(2)
         expect(order_1.line_items.all?(&:valid?)).to be true
       end
@@ -135,13 +141,12 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
   end
 
   context "merging using extension-specific line_item_comparison_hooks" do
-    before do
-      Spree::Order.register_line_item_comparison_hook(:foos_match)
-    end
+    around do |example|
+      previous_hooks = Spree::Order.line_item_comparison_hooks.dup
 
-    after do
-      # reset to avoid test pollution
-      Spree::Order.line_item_comparison_hooks = Set.new
+      Spree::Order.register_line_item_comparison_hook(:foos_match)
+      example.run
+      Spree::Order.line_item_comparison_hooks = previous_hooks
     end
 
     context "2 equal line items" do
