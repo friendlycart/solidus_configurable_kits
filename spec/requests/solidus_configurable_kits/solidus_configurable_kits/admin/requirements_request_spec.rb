@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe "SolidusConfigurableKits::Admin::Requirements", type: :request do
   let(:product) { create(:product) }

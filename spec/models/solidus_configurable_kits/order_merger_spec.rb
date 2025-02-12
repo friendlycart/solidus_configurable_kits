@@ -43,17 +43,17 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
     end
   end
 
-  context 'merging together two orders with multiple currencies line items' do
-    let(:order_2) { Spree::Order.create(currency: 'JPY') }
+  context "merging together two orders with multiple currencies line items" do
+    let(:order_2) { Spree::Order.create(currency: "JPY") }
     let(:variant_2) { create(:variant) }
 
     before do
-      Spree::Price.create(variant: variant_2, amount: 10, currency: 'JPY')
+      Spree::Price.create(variant: variant_2, amount: 10, currency: "JPY")
       order_1.contents.add(variant, 1)
       order_2.contents.add(variant_2.reload, 1)
     end
 
-    it 'rejects other order line items' do
+    it "rejects other order line items" do
       subject.merge!(order_2, user)
       expect(order_1.line_items.count).to eq(1)
 
@@ -74,7 +74,7 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "the old order is empty, the new order has a kit" do
       before do
-        order_1.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
+        order_1.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
       end
 
       it "does not lose the kit" do
@@ -87,7 +87,7 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "the old order has a kit, the new order is empty" do
       before do
-        order_2.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
+        order_2.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
       end
 
       it "does not lose the kit" do
@@ -101,8 +101,8 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "both orders have a kit with different kit items" do
       before do
-        order_1.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
-        order_2.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_2.id.to_s })
+        order_1.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
+        order_2.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_2.id.to_s})
       end
 
       it "keeps both kits" do
@@ -119,8 +119,8 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
 
     context "both orders have identical kits" do
       before do
-        order_1.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
-        order_2.contents.add(kit_product.master, 1, kit_variant_ids: { kit_requirement.id.to_s => kit_item_1.id.to_s })
+        order_1.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
+        order_2.contents.add(kit_product.master, 1, kit_variant_ids: {kit_requirement.id.to_s => kit_item_1.id.to_s})
       end
 
       it "keeps both kits" do
@@ -173,7 +173,7 @@ RSpec.describe SolidusConfigurableKits::OrderMerger, type: :model do
         end
 
         order_1.contents.add(variant, 1, foos: {})
-        order_2.contents.add(variant, 1, foos: { bar: :zoo })
+        order_2.contents.add(variant, 1, foos: {bar: :zoo})
       end
 
       specify do
