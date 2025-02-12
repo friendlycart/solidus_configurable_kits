@@ -1,0 +1,10 @@
+on: [push]
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-22.04
+    name: Run tests on ...
+    steps:
+      - uses: actions/checkout@v4
+      - id: foo
+        uses: friendlycart/action-solidus-extension@main
