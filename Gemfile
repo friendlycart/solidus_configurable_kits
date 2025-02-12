@@ -9,7 +9,7 @@ gem "solidus", github: "solidusio/solidus", branch: branch
 # Needed to help Bundler figure out how to resolve dependencies,
 # otherwise it takes forever to resolve them.
 # See https://github.com/bundler/bundler/issues/6677
-gem "rails", ENV.fetch("RAILS_VERSION", ">0.a")
+gem "rails", "~> #{ENV.fetch('RAILS_VERSION', '7.0')}"
 
 case ENV["DB"]
 when "mysql"
