@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe SolidusConfigurableKits::PriceSelector do
   subject { described_class.new(variant) }
@@ -22,8 +22,8 @@ RSpec.describe SolidusConfigurableKits::PriceSelector do
     let(:pricing_options) { described_class.pricing_options_class.new(currency: "USD") }
 
     it "returns the correct (default) price as a Spree::Money object", :aggregate_failures do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^price_for is deprecated and will be removed/, any_args)
+      expect(Spree::Deprecation).to receive(:warn)
+        .with(/^price_for is deprecated and will be removed/, any_args)
       expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(12.34, currency: "USD"))
     end
   end
