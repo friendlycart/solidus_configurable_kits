@@ -16,20 +16,11 @@ jobs:
           - "7.0"
           - "7.1"
           - "7.2"
-          - "8.0"
         database:
           - sqlite
           - postgresql
           - mariadb
         exclude:
-          - rails-version: "8.0"
-            solidus-branch: "v4.1"
-          - rails-version: "8.0"
-            solidus-branch: "v4.2"
-          - rails-version: "8.0"
-            solidus-branch: "v4.3"
-          - rails-version: "8.0"
-            solidus-branch: "v4.4"
           - rails-version: "7.2"
             solidus-branch: "v4.2"
           - rails-version: "7.2"
