@@ -22,6 +22,8 @@ jobs:
           - mariadb
         exclude:
           - rails-version: "7.2"
+            solidus-branch: "v4.3"
+          - rails-version: "7.2"
             solidus-branch: "v4.2"
           - rails-version: "7.2"
             solidus-branch: "v4.1"
