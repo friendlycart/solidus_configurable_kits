@@ -30,6 +30,14 @@ jobs:
             solidus-branch: "v4.3"
           - rails-version: "8.0"
             solidus-branch: "v4.4"
+          - rails-version: "7.2"
+            solidus-branch: "v4.2"
+          - rails-version: "7.2"
+            solidus-branch: "v4.1"
+          - rails-version: "7.1"
+            solidus-branch: "v4.2"
+          - rails-version: "7.1"
+            solidus-branch: "v4.1"
     name: Run tests on ${{ matrix.database }}, Rails ${{ matrix.rails-version }}, Solidus ${{ matrix.solidus-branch }}
     steps:
       - uses: actions/checkout@v4
