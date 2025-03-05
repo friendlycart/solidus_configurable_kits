@@ -2,7 +2,7 @@
 
 module SolidusConfigurableKits
   class OrdersController < ::Spree::StoreController
-    helper 'spree/products', 'spree/orders'
+    helper "spree/products", "spree/orders"
 
     respond_to :html
 
@@ -14,13 +14,13 @@ module SolidusConfigurableKits
       @order = current_order(create_order_if_necessary: true)
       authorize! :update, @order, cookies.signed[:guest_token]
 
-      variant  = ::Spree::Variant.find(params[:variant_id])
+      variant = ::Spree::Variant.find(params[:variant_id])
       quantity = params[:quantity].present? ? params[:quantity].to_i : 1
-      options = { kit_variant_ids: params[:kit_variant_ids] }
+      options = {kit_variant_ids: params[:kit_variant_ids]}
 
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
       if !quantity.between?(1, 2_147_483_647)
-        @order.errors.add(:base, t('spree.please_enter_reasonable_quantity'))
+        @order.errors.add(:base, t("spree.please_enter_reasonable_quantity"))
       else
         begin
           @line_item = @order.contents.add(variant, quantity, options)

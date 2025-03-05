@@ -3,8 +3,40 @@ on: [push]
 jobs:
   run_tests:
     runs-on: ubuntu-22.04
-    name: Run tests on ...
+    strategy:
+      fail-fast: true
+      matrix:
+        solidus-branch:
+          - "v4.1"
+          - "v4.2"
+          - "v4.3"
+          - "v4.4"
+          - main
+        rails-version:
+          - "7.0"
+          - "7.1"
+          - "7.2"
+        database:
+          - sqlite
+          - postgresql
+          - mariadb
+        exclude:
+          - rails-version: "7.2"
+            solidus-branch: "v4.3"
+          - rails-version: "7.2"
+            solidus-branch: "v4.2"
+          - rails-version: "7.2"
+            solidus-branch: "v4.1"
+          - rails-version: "7.1"
+            solidus-branch: "v4.2"
+          - rails-version: "7.1"
+            solidus-branch: "v4.1"
+    name: Run tests on ${{ matrix.database }}, Rails ${{ matrix.rails-version }}, Solidus ${{ matrix.solidus-branch }}
     steps:
       - uses: actions/checkout@v4
       - id: foo
         uses: friendlycart/action-solidus-extension@main
+        with:
+          solidus-branch: ${{ matrix.solidus-branch }}
+          rails-version: ${{ matrix.rails-version }}
+          database: ${{ matrix.database }}

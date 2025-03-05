@@ -27,7 +27,7 @@ module SolidusConfigurableKits
         (price.country_iso == price_options.desired_attributes[:country_iso] ||
           price.country_iso.nil?
         ) && price.currency == price_options.desired_attributes[:currency] &&
-        price.kit_item == price_options.desired_attributes[:kit_item]
+          price.kit_item == price_options.desired_attributes[:kit_item]
       end
     end
   end

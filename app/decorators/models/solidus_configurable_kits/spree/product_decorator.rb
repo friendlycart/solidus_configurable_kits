@@ -12,7 +12,7 @@ module SolidusConfigurableKits
         base.delegate :resilient_money_price, to: :master
 
         base.scope :with_kit_item_prices, -> {
-          joins(variants_including_master: :prices).where(spree_prices: { kit_item: true }).distinct
+          joins(variants_including_master: :prices).where(spree_prices: {kit_item: true}).distinct
         }
       end
 
@@ -21,7 +21,7 @@ module SolidusConfigurableKits
       # @return [Array<Spree::Variant>] all variants that can be part of a kit
       def kit_item_variants_for(pricing_options = Spree::Config.default_pricing_options)
         variants_including_master.includes(:option_values).with_prices(pricing_options).select do |variant|
-          variant.option_values.any? || (variant.is_master? && variants.none? )
+          variant.option_values.any? || (variant.is_master? && variants.none?)
         end
       end
 
