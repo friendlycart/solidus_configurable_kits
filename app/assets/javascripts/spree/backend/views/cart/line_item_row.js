@@ -88,14 +88,16 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
       return;
     }
     var attrs = {
-      quantity: parseInt(this.$('input.line_item_quantity').val()),
-      variant_id: this.model.get('variant').id,
-      kit_variant_ids: Object.fromEntries(this.kitItems().map((i) =>
-        [
-          i.get("kit_requirement").id,
-          i.get("variant").id
-        ]
-      ))
+      line_item: {
+        quantity: parseInt(this.$('input.line_item_quantity').val()),
+        variant_id: this.model.get('variant').id,
+        kit_variant_ids: Object.fromEntries(this.kitItems().map((i) =>
+          [
+            i.get("kit_requirement").id,
+            i.get("variant").id
+          ]
+        ))
+      }
     }
 
     var model = this.model;
